@@ -1,0 +1,1325 @@
+{
+	"info": {
+		"_postman_id": "89816824-d22f-438a-baf6-0dc06b17ba7a",
+		"name": "search_engine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10242828"
+	},
+	"item": [
+		{
+			"name": "用户模块",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nick_name",
+									"value": "CocaineCong2",
+									"type": "text"
+								},
+								{
+									"key": "user_name",
+									"value": "FanOne2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "11111111",
+									"type": "text"
+								},
+								{
+									"key": "password_confirm",
+									"value": "11111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/user/register",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "用户注册",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nick_name",
+											"value": "FanOne1",
+											"type": "text"
+										},
+										{
+											"key": "user_name",
+											"value": "WuLI12",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11111111",
+											"type": "text"
+										},
+										{
+											"key": "password_confirm",
+											"value": "11111111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/user/register",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:10:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": null,\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_name",
+									"value": "FanOne2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "11111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/user/login",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "用户登录",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_name",
+											"value": "FanOneUser",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "11111111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/user/login",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 09 Aug 2023 23:13:25 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "452"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"user\": {\n            \"user_id\": 1,\n            \"user_name\": \"FanOneUser\",\n            \"nick_name\": \"FanOneNick\"\n        },\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJGYW5PbmVVc2VyIiwiZXhwIjoxNjkxNzA5MjA1LCJpc3MiOiJtYWxsIn0.DOCsHLzpIhhhZbKWqNGORcvPAHIQBRqndiwOe8_62cY\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI0ODY4MDUsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.HVXc9u4Ew6NTyjqFdHik5VbMCDLMomZeZs68o9lR2co\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "收藏夹模块",
+			"item": [
+				{
+					"name": "创建收藏夹",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "favorite_name",
+									"value": "LearningSomething2222",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/favorite/create",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "创建收藏夹",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_name",
+											"value": "LearningSomething",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/favorite/create",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU4ODI2LCJpc3MiOiJtYWxsIn0.jv1lrrnyS53I_Ng0nIH0Q4XxtH-SBEIlj_YvZbFkBaU"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY0MjYsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.a_fFLLVcb98NHDg7mgc0lPMkN517IooLXKuB5TDgueU"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU4ODI2LCJpc3MiOiJtYWxsIn0.jv1lrrnyS53I_Ng0nIH0Q4XxtH-SBEIlj_YvZbFkBaU; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY0MjYsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.a_fFLLVcb98NHDg7mgc0lPMkN517IooLXKuB5TDgueU; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:27:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "获取收藏夹列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/favorite/list",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "获取收藏夹列表",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/favorite/list",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU4OTQ1LCJpc3MiOiJtYWxsIn0.vulwwsHjyeSkEG82aWv2C2t2XsTOM_2STtZdvy0I3Vo"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY1NDUsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.Yy_dcVUglxKmbAKLGbPLbuCFXAkx1HEUGnUceO3xHck"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU4OTQ1LCJpc3MiOiJtYWxsIn0.vulwwsHjyeSkEG82aWv2C2t2XsTOM_2STtZdvy0I3Vo; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY1NDUsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.Yy_dcVUglxKmbAKLGbPLbuCFXAkx1HEUGnUceO3xHck; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:29:05 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"items\": [\n            {\n                \"favorite_id\": 1,\n                \"favorite_name\": \"LearningSomething\"\n            }\n        ]\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "更新收藏夹名字",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "favorite_name",
+									"value": "knowledge",
+									"type": "text"
+								},
+								{
+									"key": "favorite_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/favorite/update",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "更新收藏夹名字",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_name",
+											"value": "knowledge",
+											"type": "text"
+										},
+										{
+											"key": "favorite_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/favorite/update",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MDA3LCJpc3MiOiJtYWxsIn0.kL2vr-tuvO6MJxXDq10LLUEUxOY9Hb9XA2xMvM3-rM4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY2MDcsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.9_Nukkjj4DQgAT5jEK2G586RXK7k2qH2eV8xb3i9wnM"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MDA3LCJpc3MiOiJtYWxsIn0.kL2vr-tuvO6MJxXDq10LLUEUxOY9Hb9XA2xMvM3-rM4; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY2MDcsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.9_Nukkjj4DQgAT5jEK2G586RXK7k2qH2eV8xb3i9wnM; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:30:07 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "删除收藏夹",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "favorite_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/favorite/delete",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "删除收藏夹",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/favorite/delete",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MDY2LCJpc3MiOiJtYWxsIn0.dLVAKkQJGmthOXletmzddzfGFIe_IwcnrbuUtSAAJtU"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY2NjYsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.hakeYOLr3MP1Qt0D3wdxEYA18jnSqTr5U8uZJaJyYhQ"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MDY2LCJpc3MiOiJtYWxsIn0.dLVAKkQJGmthOXletmzddzfGFIe_IwcnrbuUtSAAJtU; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY2NjYsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.hakeYOLr3MP1Qt0D3wdxEYA18jnSqTr5U8uZJaJyYhQ; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:31:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "添加一条收藏到收藏夹",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "favorite_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "url_id",
+									"value": "801",
+									"type": "text"
+								},
+								{
+									"key": "url",
+									"value": "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.39yst.com%2Fuploads%2F2015%2F0713%2F1436774944495.jpg&refer=http%3A%2F%2Fimg.39yst.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1632517702&t=e9527879617737e336805f347148920b",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "踢足球的好处 踢足球对身心的益处",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/favorite_detail/create",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite_detail",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "添加一条收藏到收藏夹",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "url_id",
+											"value": "801",
+											"type": "text"
+										},
+										{
+											"key": "url",
+											"value": "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.39yst.com%2Fuploads%2F2015%2F0713%2F1436774944495.jpg&refer=http%3A%2F%2Fimg.39yst.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1632517702&t=e9527879617737e336805f347148920b",
+											"type": "text"
+										},
+										{
+											"key": "desc",
+											"value": "踢足球的好处 踢足球对身心的益处",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/favorite_detail/create",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite_detail",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MTgwLCJpc3MiOiJtYWxsIn0.cXJSDXTROn2IFdTN-k2uFP7cOsMpzzoVWEW87n0CwVo"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY3ODAsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.bCcrE1XGArVlS5B3weu-z2NUJbTYyJ8jhELZRo8Yzc4"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MTgwLCJpc3MiOiJtYWxsIn0.cXJSDXTROn2IFdTN-k2uFP7cOsMpzzoVWEW87n0CwVo; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY3ODAsImlzcyI6InNlYXJjaC1lbmdpbmUifQ.bCcrE1XGArVlS5B3weu-z2NUJbTYyJ8jhELZRo8Yzc4; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:33:00 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "202"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"items\": [\n            {\n                \"favorite_id\": 1,\n                \"favorite_name\": \"LearningSomething\",\n                \"user_id\": 1\n            },\n            {\n                \"favorite_id\": 3,\n                \"favorite_name\": \"LearningSomething2222\",\n                \"user_id\": 1\n            }\n        ]\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "获取收藏夹详情",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/favorite_detail/list",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite_detail",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "获取收藏夹详情",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/favorite_detail/list",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite_detail",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MjM5LCJpc3MiOiJtYWxsIn0.kUFhjUTbrXJ0hQMD3R0ME357ZgTGLR6bHhRGBqZIbKY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY4MzksImlzcyI6InNlYXJjaC1lbmdpbmUifQ.rrrr7N4CaSu2kpjP5nd05HbDGb4oG9q90qNEKmQdRWY"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5MjM5LCJpc3MiOiJtYWxsIn0.kUFhjUTbrXJ0hQMD3R0ME357ZgTGLR6bHhRGBqZIbKY; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzY4MzksImlzcyI6InNlYXJjaC1lbmdpbmUifQ.rrrr7N4CaSu2kpjP5nd05HbDGb4oG9q90qNEKmQdRWY; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:33:59 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "删除收藏夹某一条详情",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "favorite_id",
+									"value": "1",
+									"description": "收藏夹id",
+									"type": "text"
+								},
+								{
+									"key": "favorite_detail_id",
+									"value": "2",
+									"description": "收藏夹里面的详情的id",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/favorite_detail/delete",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"favorite_detail",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "删除收藏夹某一条详情",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_id",
+											"value": "1",
+											"description": "收藏夹id",
+											"type": "text"
+										},
+										{
+											"key": "favorite_detail_id",
+											"value": "2",
+											"description": "收藏夹里面的详情的id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/favorite_detail/delete",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"favorite_detail",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5Njc5LCJpc3MiOiJtYWxsIn0.grKkXZQrvSdoeLV5IXKOfVdgSkNNNy_bmT0d0oHzUYo"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzcyNzksImlzcyI6InNlYXJjaC1lbmdpbmUifQ.Kj3D8HAm-gSt4RjN9JuKj52c3aH2UJNC3vo5p8TU2wA"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJXdUxJIiwiZXhwIjoxNjg1MjU5Njc5LCJpc3MiOiJtYWxsIn0.grKkXZQrvSdoeLV5IXKOfVdgSkNNNy_bmT0d0oHzUYo; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMzcyNzksImlzcyI6InNlYXJjaC1lbmdpbmUifQ.Kj3D8HAm-gSt4RjN9JuKj52c3aH2UJNC3vo5p8TU2wA; Path=/; Max-Age=86400; HttpOnly"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 27 May 2023 07:41:19 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "搜索模块",
+			"item": [
+				{
+					"name": "搜索文本",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"query\":\"导演\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/v1/search_engine/search?query=导演",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"search_engine",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "导演"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "搜索文本",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n      \"query\":\"导演\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/v1/search_engine/search?query=导演",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"search_engine",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "导演"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 01 Oct 2023 09:11:00 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"count\": 66,\n        \"search_engine_info_list\": [\n            {\n                \"url_id\": 3011514,\n                \"desc\": \"剧情/歌舞经典百老汇音乐剧《日落大道》将拍成电影，格伦·克洛斯主演，最新找到导演：曾获托尼奖的著名音乐剧编舞Rob Ashford(《摩登米莉》《冰雪奇缘》)，这将是他首次执导电影长片，Andrew Lloyd Webber等任制片人。Musical/音乐剧/美国/待映/Webber\"\n            },\n            {\n                \"url_id\": 3011514,\n                \"desc\": \"剧情/歌舞经典百老汇音乐剧《日落大道》将拍成电影，格伦·克洛斯主演，最新找到导演：曾获托尼奖的著名音乐剧编舞Rob Ashford(《摩登米莉》《冰雪奇缘》)，这将是他首次执导电影长片，Andrew Lloyd Webber等任制片人。Musical/音乐剧/美国/待映/Webber\"\n            },\n            {\n                \"url_id\": 3148091,\n                \"desc\": \"动作/惊悚/犯罪去年票房大卖的影片《通缉令》（Wanted，又译刺客联盟）的导演提莫·贝克曼贝托夫（Timur Bekmambetov）近日接受俄罗斯媒体采访时透露，《通缉令2》将于今年年底开拍，主演安吉丽娜·朱丽的角色有望“复活”。动作/AngelinaJolie/JamesMcAvoy/美国/刺客联盟2/刺客联盟/美国电影/续集\"\n            },\n            {\n                \"url_id\": 3148091,\n                \"desc\": \"动作/惊悚/犯罪去年票房大卖的影片《通缉令》（Wanted，又译刺客联盟）的导演提莫·贝克曼贝托夫（Timur Bekmambetov）近日接受俄罗斯媒体采访时透露，《通缉令2》将于今年年底开拍，主演安吉丽娜·朱丽的角色有望“复活”。动作/AngelinaJolie/JamesMcAvoy/美国/刺客联盟2/刺客联盟/美国电影/续集\"\n            },\n            {\n                \"url_id\": 3439365,\n                \"desc\": \"剧情/传记已故影星史蒂夫·麦奎因传记片获得A类融资，进入筹备阶段。麦奎因是好莱坞六七十年代硬汉动作片明星，曾出演[豪勇七蛟龙]、[大逃亡]、[巴比龙]等片，他除了演员之外还是一位冠军赛车手。据悉，导演詹姆士·格雷([移民])和杰瑞米·雷纳正在积极谈判中，查宁·塔图姆和瑞恩·高斯林对此片也有极大兴趣。纪录片/剧情\"\n            },\n            {\n                \"url_id\": 3439365,\n                \"desc\": \"剧情/传记已故影星史蒂夫·麦奎因传记片获得A类融资，进入筹备阶段。麦奎因是好莱坞六七十年代硬汉动作片明星，曾出演[豪勇七蛟龙]、[大逃亡]、[巴比龙]等片，他除了演员之外还是一位冠军赛车手。据悉，导演詹姆士·格雷([移民])和杰瑞米·雷纳正在积极谈判中，查宁·塔图姆和瑞恩·高斯林对此片也有极大兴趣。纪录片/剧情\"\n            },\n            {\n                \"url_id\": 3543304,\n                \"desc\": \"剧情/传记塞尔维亚导演埃米尔·库斯图里卡（Emir Kusturica）最近在筹拍一部讲述墨西哥革命英雄派其奥·维拉（Pancho Villa）故事的西班牙语传记片，约翰尼·德普（Johnny Depp）有望担纲主演，扮演这位墨西哥历史上著名的开国功臣。JohnnyDepp/EmirKusturica/美国/约翰尼·德普/西班牙/电影/美国电影/非常期待的新片\"\n            },\n            {\n                \"url_id\": 3543304,\n                \"desc\": \"剧情/传记塞尔维亚导演埃米尔·库斯图里卡（Emir Kusturica）最近在筹拍一部讲述墨西哥革命英雄派其奥·维拉（Pancho Villa）故事的西班牙语传记片，约翰尼·德普（Johnny Depp）有望担纲主演，扮演这位墨西哥历史上著名的开国功臣。JohnnyDepp/EmirKusturica/美国/约翰尼·德普/西班牙/电影/美国电影/非常期待的新片\"\n            },\n            {\n                \"url_id\": 4285992,\n                \"desc\": \"爱情/动画/家庭/奇幻/冒险据悉，《魔法奇缘2》（Enchanted 2）将由曾执导过桑德拉·布洛克卖座浪漫喜剧《假结婚》（The Proposal）的女导演安妮·弗莱切（Anne Fletcher）执导，曾创作《蓝精灵》（The Smurfs）、《怪物史瑞克2》（Shrek 2）等影片剧本的J. David Stem和David N. Weiss将担任编剧。童话/迪士尼/爱情/魔幻/美国/美国电影/啥？第二部？/AmyAdams\"\n            },\n            {\n                \"url_id\": 4285992,\n                \"desc\": \"爱情/动画/家庭/奇幻/冒险据悉，《魔法奇缘2》（Enchanted 2）将由曾执导过桑德拉·布洛克卖座浪漫喜剧《假结婚》（The Proposal）的女导演安妮·弗莱切（Anne Fletcher）执导，曾创作《蓝精灵》（The Smurfs）、《怪物史瑞克2》（Shrek 2）等影片剧本的J. David Stem和David N. Weiss将担任编剧。童话/迪士尼/爱情/魔幻/美国/美国电影/啥？第二部？/AmyAdams\"\n            },\n            {\n                \"url_id\": 4301124,\n                \"desc\": \"剧情/音乐/传记《星际迷航》（Star Trek）主演扎克瑞·昆图（Zachary Quinto）将在梦工厂拍摄的一部传记片中扮演美国著名作曲家、钢琴演奏家乔治·格什温（George Gershwin）。该片是大导演斯皮尔伯格（Steven Spielberg）正在考虑执导的三部影片之一。ZacharyQuinto/传记/Doug_Wright/DougWright/音乐/格什温/有电影/Zachary\"\n            },\n            {\n                \"url_id\": 4301124,\n                \"desc\": \"剧情/音乐/传记《星际迷航》（Star Trek）主演扎克瑞·昆图（Zachary Quinto）将在梦工厂拍摄的一部传记片中扮演美国著名作曲家、钢琴演奏家乔治·格什温（George Gershwin）。该片是大导演斯皮尔伯格（Steven Spielberg）正在考虑执导的三部影片之一。ZacharyQuinto/传记/Doug_Wright/DougWright/音乐/格什温/有电影/Zachary\"\n            },\n            {\n                \"url_id\": 10467754,\n                \"desc\": \"剧情/爱情/舞台艺术据导演关锦鹏近期透露，赵薇要和陈冲一起主演自己的新片《放浪记》。戏剧明星韦天怡（陈冲 饰）在她艺术生涯最辉煌的时候，随着一个戏剧天才叫苏洛（赵薇 饰）的年轻漂亮女孩一夜爆红的出现，命运发生了比舞台上的情节更加戏剧性的改变。两个女人之间展开了一场看不见硝烟的战争。最终她 们才明白，生活才是艺术真正的戏剧。赵薇/关锦鹏/瑛太/陈冲/中国电影/李樯/中国/2013\"\n            },\n            {\n                \"url_id\": 10467754,\n                \"desc\": \"剧情/爱情/舞台艺术据导演关锦鹏近期透露，赵薇要和陈冲一起主演自己的新片《放浪记》。戏剧明星韦天怡（陈冲 饰）在她艺术生涯最辉煌的时候，随着一个戏剧天才叫苏洛（赵薇 饰）的年轻漂亮女孩一夜爆红的出现，命运发生了比舞台上的情节更加戏剧性的改变。两个女人之间展开了一场看不见硝烟的战争。最终她 们才明白，生活才是艺术真正的戏剧。赵薇/关锦鹏/瑛太/陈冲/中国电影/李樯/中国/2013\"\n            },\n            {\n                \"url_id\": 25727231,\n                \"desc\": \"恐怖1980年的《闪灵》由斯坦利·库布里克（Stanley Kubrick）导演、杰克·尼科尔森（Jack Nicholson）主演，故事讲述一位失意编剧带着妻儿到位于落基山中、与世隔绝的了望酒店，当起了这里的看管人，不过这座酒店阴气很重，杰克也明显受到影响逐渐走向疯狂，最后甚至拿起斧头要杀死自己的妻儿。美国/恐怖/小说改编/闪灵前传/美国电影/斯蒂芬·金/实验\"\n            },\n            {\n                \"url_id\": 25727231,\n                \"desc\": \"恐怖1980年的《闪灵》由斯坦利·库布里克（Stanley Kubrick）导演、杰克·尼科尔森（Jack Nicholson）主演，故事讲述一位失意编剧带着妻儿到位于落基山中、与世隔绝的了望酒店，当起了这里的看管人，不过这座酒店阴气很重，杰克也明显受到影响逐渐走向疯狂，最后甚至拿起斧头要杀死自己的妻儿。美国/恐怖/小说改编/闪灵前传/美国电影/斯蒂芬·金/实验\"\n            },\n            {\n                \"url_id\": 25778489,\n                \"desc\": \"科幻2015年这位炙手可热的香港女导演手握三部风格迥异的新片：汇聚中韩众多一线明星的《顶峰》古天乐/香港电影/华语电影/科幻/中国大陆/2016/上映日未定/待定\"\n            },\n            {\n                \"url_id\": 25778489,\n                \"desc\": \"科幻2015年这位炙手可热的香港女导演手握三部风格迥异的新片：汇聚中韩众多一线明星的《顶峰》古天乐/香港电影/华语电影/科幻/中国大陆/2016/上映日未定/待定\"\n            },\n            {\n                \"url_id\": 26258779,\n                \"desc\": \"动作/科幻/冒险《银河护卫队2》5月5日就将在全美上映，在被问及是否会继续创作《银河护卫队》时，导演詹姆斯·古恩肯定地说：“这是肯定的，我们一定会拍《银河护卫队3》。我现在正在思考这个问题，但是现在我必须想清楚故事要往哪个方向发展，这也决定着我未来三年的时间将会如何度过。”漫威/漫威电影宇宙/超级英雄/科幻/MARVEL/Marvel/美国/2020\"\n            },\n            {\n                \"url_id\": 26258779,\n                \"desc\": \"动作/科幻/冒险《银河护卫队2》5月5日就将在全美上映，在被问及是否会继续创作《银河护卫队》时，导演詹姆斯·古恩肯定地说：“这是肯定的，我们一定会拍《银河护卫队3》。我现在正在思考这个问题，但是现在我必须想清楚故事要往哪个方向发展，这也决定着我未来三年的时间将会如何度过。”漫威/漫威电影宇宙/超级英雄/科幻/MARVEL/Marvel/美国/2020\"\n            },\n            {\n                \"url_id\": 26265958,\n                \"desc\": \"传记/历史《为奴十二年》导演史蒂夫·麦奎因透露，他的下一部电影是关于美国著名男低音歌唱家、演员、社会活动家保罗·罗伯逊的传记电影。据悉，哈里·贝拉方特将出演这部电影其中的一个角色。目前，这部电影具体的开机时间还未最终确定。美国/保罗·罗伯逊\"\n            },\n            {\n                \"url_id\": 26265958,\n                \"desc\": \"传记/历史《为奴十二年》导演史蒂夫·麦奎因透露，他的下一部电影是关于美国著名男低音歌唱家、演员、社会活动家保罗·罗伯逊的传记电影。据悉，哈里·贝拉方特将出演这部电影其中的一个角色。目前，这部电影具体的开机时间还未最终确定。美国/保罗·罗伯逊\"\n            },\n            {\n                \"url_id\": 26268576,\n                \"desc\": \"科幻据外媒THR报道，狮门影业已计划拍摄一部科幻惊悚电影《Alpha》，故事来自威尔逊的一个创意，布拉德·皮特将于他Plan B公司的合伙人迪·加纳和Jeremy Kleiner一同完成影片的制片工作。电影的细节剧情还处于保密阶段，大体内容是个科幻求生的故事。威尔逊将根据自己的想法执笔剧本。新人Anthony Scott Burns将指导这部电影，这也是他的导演处女座。至今，布拉德·皮特表示暂不参演电影《Alpha》2017\"\n            },\n            {\n                \"url_id\": 26268576,\n                \"desc\": \"科幻据外媒THR报道，狮门影业已计划拍摄一部科幻惊悚电影《Alpha》，故事来自威尔逊的一个创意，布拉德·皮特将于他Plan B公司的合伙人迪·加纳和Jeremy Kleiner一同完成影片的制片工作。电影的细节剧情还处于保密阶段，大体内容是个科幻求生的故事。威尔逊将根据自己的想法执笔剧本。新人Anthony Scott Burns将指导这部电影，这也是他的导演处女座。至今，布拉德·皮特表示暂不参演电影《Alpha》2017\"\n            },\n            {\n                \"url_id\": 26277246,\n                \"desc\": \"科幻这部新片暂定名《Cascade》，由20世纪福斯出品，将由雷德利·斯科特、斯蒂文·泽里安等联合制片，导演人选目前锁定了冰岛导演巴塔萨·科马库，他曾拍摄过《白夜婚礼》、《深渊》等佳作，近年来在好莱坞发展，拍摄了《双龙出手》等不同风格的影片。他现在与福斯仍在最后的商谈阶段。大魔王/m2019/女神/2019\"\n            },\n            {\n                \"url_id\": 26277246,\n                \"desc\": \"科幻这部新片暂定名《Cascade》，由20世纪福斯出品，将由雷德利·斯科特、斯蒂文·泽里安等联合制片，导演人选目前锁定了冰岛导演巴塔萨·科马库，他曾拍摄过《白夜婚礼》、《深渊》等佳作，近年来在好莱坞发展，拍摄了《双龙出手》等不同风格的影片。他现在与福斯仍在最后的商谈阶段。大魔王/m2019/女神/2019\"\n            },\n            {\n                \"url_id\": 26298999,\n                \"desc\": \"剧情王家卫的未来计划中有两部作品备受瞩目，一部是改编自南京作家张嘉佳《从你的全世界路过》书中一篇的《摆渡人》，一部是改编自上海作家金宇澄长篇小说的《繁花》，近日王家卫特别澄清，自己只会担纲《摆渡人》一片的监制，而导演人选将在近期公布，这也从侧面印证了王家卫的下一部执导电影将是《繁花》，目前拍摄日期及映期均未公布。王家卫/吴亦凡/文艺/金宇澄/章子怡/电影/香港电影/香港\"\n            },\n            {\n                \"url_id\": 26298999,\n                \"desc\": \"剧情王家卫的未来计划中有两部作品备受瞩目，一部是改编自南京作家张嘉佳《从你的全世界路过》书中一篇的《摆渡人》，一部是改编自上海作家金宇澄长篇小说的《繁花》，近日王家卫特别澄清，自己只会担纲《摆渡人》一片的监制，而导演人选将在近期公布，这也从侧面印证了王家卫的下一部执导电影将是《繁花》，目前拍摄日期及映期均未公布。王家卫/吴亦凡/文艺/金宇澄/章子怡/电影/香港电影/香港\"\n            },\n            {\n                \"url_id\": 26344874,\n                \"desc\": \"剧情/古装2015年3月25日下午，小马奔腾在第39届香港国际电影节上举办了2015年新片项目发布会，集团副总裁李立功、影业总经理陈雷出席了活动。去年，小马奔腾遭遇内部纷争，不过，《心花路放》，《太平轮》，《匆匆那年》几部小马出品的影片也在电影市场上获得了不同程度的反响。此番亮相香港电影节，小马奔腾也公布了扶持新导演，加强国际合作，打造全方位ip等电影板块的未来三大发展方向。甄嬛传/国产电视剧/剧情好/宫斗/孙俪/中国电影/演员用心/每每都看不腻\"\n            },\n            {\n                \"url_id\": 26344874,\n                \"desc\": \"剧情/古装2015年3月25日下午，小马奔腾在第39届香港国际电影节上举办了2015年新片项目发布会，集团副总裁李立功、影业总经理陈雷出席了活动。去年，小马奔腾遭遇内部纷争，不过，《心花路放》，《太平轮》，《匆匆那年》几部小马出品的影片也在电影市场上获得了不同程度的反响。此番亮相香港电影节，小马奔腾也公布了扶持新导演，加强国际合作，打造全方位ip等电影板块的未来三大发展方向。甄嬛传/国产电视剧/剧情好/宫斗/孙俪/中国电影/演员用心/每每都看不腻\"\n            },\n            {\n                \"url_id\": 26370387,\n                \"desc\": \"剧情/悬疑北京隽扉世纪公司宣布成功购买了麦家的长篇小说《解密》的影视改编权，并由第五代导演何平执导。何平表示目前正在打磨剧本，希望将其打造成一个重量级的中美合拍片：“这本小说牵扯到冷战时期的很多内容，关于冷战的大部分电影基本上都是表现美苏冷战，没有表现中美冷战的影片，这需要我们解密那些背后的故事。”谍战/麦家/电影/推理/国产/何平/中国电影/中国\"\n            },\n            {\n                \"url_id\": 26370387,\n                \"desc\": \"剧情/悬疑北京隽扉世纪公司宣布成功购买了麦家的长篇小说《解密》的影视改编权，并由第五代导演何平执导。何平表示目前正在打磨剧本，希望将其打造成一个重量级的中美合拍片：“这本小说牵扯到冷战时期的很多内容，关于冷战的大部分电影基本上都是表现美苏冷战，没有表现中美冷战的影片，这需要我们解密那些背后的故事。”谍战/麦家/电影/推理/国产/何平/中国电影/中国\"\n            },\n            {\n                \"url_id\": 26373167,\n                \"desc\": \"喜剧/爱情演员当导演也算有过先例，不过情感专栏作者做导演就令人瞠目了。素有国内 “情感奶爸”之称的陆琪也要做导演了，他将执导一部叫做《算爱大师》的电影，讲述了这样一个故事：高学历的海归才女沈璐开了一家算爱诊所，专门为痴男怨女解决感情问题。在近期的诊断中，发现了十位女生陆续向她求助，诉说无法忘怀这个抛弃她们的男人，沈璐发现她们所说的是同一个男人，而且这样的抛弃游戏更像是完成一个个任务...该片由叶伟民监制，将于年底开机。\"\n            },\n            {\n                \"url_id\": 26373167,\n                \"desc\": \"喜剧/爱情演员当导演也算有过先例，不过情感专栏作者做导演就令人瞠目了。素有国内 “情感奶爸”之称的陆琪也要做导演了，他将执导一部叫做《算爱大师》的电影，讲述了这样一个故事：高学历的海归才女沈璐开了一家算爱诊所，专门为痴男怨女解决感情问题。在近期的诊断中，发现了十位女生陆续向她求助，诉说无法忘怀这个抛弃她们的男人，沈璐发现她们所说的是同一个男人，而且这样的抛弃游戏更像是完成一个个任务...该片由叶伟民监制，将于年底开机。\"\n            },\n            {\n                \"url_id\": 26378809,\n                \"desc\": \"科幻在艺恩汇第二期电影创投沙龙上，还展示了四个电影项目，导演辛成江的《传送点》，讲述了寻宝游戏中虚拟世界与真实世界的故事，世界观颇为宏大。\"\n            },\n            {\n                \"url_id\": 26378809,\n                \"desc\": \"科幻在艺恩汇第二期电影创投沙龙上，还展示了四个电影项目，导演辛成江的《传送点》，讲述了寻宝游戏中虚拟世界与真实世界的故事，世界观颇为宏大。\"\n            },\n            {\n                \"url_id\": 26413207,\n                \"desc\": \"动画梦工厂动画正计划把Dan Santat的童书《比克的冒险：还未被幻想出来的朋友》（The Adventures of Beekle: The Unimaginary Friend）搬上大银幕，曾执导过《朱诺》（Juno）等真人电影的导演杰森·里特曼（Jason Reitman）这一次将改变画风，担任这部动画的导演和编剧。贾森·雷特曼/梦工厂/动画\"\n            },\n            {\n                \"url_id\": 26413207,\n                \"desc\": \"动画梦工厂动画正计划把Dan Santat的童书《比克的冒险：还未被幻想出来的朋友》（The Adventures of Beekle: The Unimaginary Friend）搬上大银幕，曾执导过《朱诺》（Juno）等真人电影的导演杰森·里特曼（Jason Reitman）这一次将改变画风，担任这部动画的导演和编剧。贾森·雷特曼/梦工厂/动画\"\n            },\n            {\n                \"url_id\": 26635029,\n                \"desc\": \"动作/科幻乔治·米勒也在最近的采访中确认：华纳正在计划拍摄《疯狂的麦克斯》两部续集。而在拍摄《狂暴之路》的过程中，两部续集的剧本已经完成了。乔治·米勒可能都不会成为这两部续集电影的导演了。就在近日他曾明确表示希望下一部电影将会是没有特效和小成本作品。主演汤姆·哈迪已经与华纳签署了协议，将继续出演三部麦克斯系列新片，而查理兹·塞隆并没有续集的片约在身。疯狂的麦克斯/汤姆·哈迪/TomHardy/科幻/美国/动作/2019/废土\"\n            },\n            {\n                \"url_id\": 26635029,\n                \"desc\": \"动作/科幻乔治·米勒也在最近的采访中确认：华纳正在计划拍摄《疯狂的麦克斯》两部续集。而在拍摄《狂暴之路》的过程中，两部续集的剧本已经完成了。乔治·米勒可能都不会成为这两部续集电影的导演了。就在近日他曾明确表示希望下一部电影将会是没有特效和小成本作品。主演汤姆·哈迪已经与华纳签署了协议，将继续出演三部麦克斯系列新片，而查理兹·塞隆并没有续集的片约在身。疯狂的麦克斯/汤姆·哈迪/TomHardy/科幻/美国/动作/2019/废土\"\n            },\n            {\n                \"url_id\": 26648932,\n                \"desc\": \"动画尼尔·盖曼（Neil Gaiman）的童书《幸好有牛奶》（Fortunately the Milk）即将被20世纪福克斯搬上大银幕，曾经执导过《热血警探》（Hot Fuzz）等奇奇怪怪、脑洞大开影片的英国导演埃德加·怀特（Edgar Wright）将担任该片导演，而约 翰尼·德普（Johnny Depp）则将担任主演。\"\n            },\n            {\n                \"url_id\": 26648932,\n                \"desc\": \"动画尼尔·盖曼（Neil Gaiman）的童书《幸好有牛奶》（Fortunately the Milk）即将被20世纪福克斯搬上大银幕，曾经执导过《热血警探》（Hot Fuzz）等奇奇怪怪、脑洞大开影片的英国导演埃德加·怀特（Edgar Wright）将担任该片导演，而约 翰尼·德普（Johnny Depp）则将担任主演。\"\n            },\n            {\n                \"url_id\": 26687682,\n                \"desc\": \"恐怖STX娱乐公司近日买下了David Jaher小说《莱姆街的女巫》（The Witch of Lime Street: Seance Seduction and Houdini in the Spirit World）电影版权，他们将邀请恐怖片《妈妈》（Mama）的导演安德斯·穆斯切蒂（Andres Muschietti）担任制片人和导演，而David Jaher会亲自改编剧本。\"\n            },\n            {\n                \"url_id\": 26687682,\n                \"desc\": \"恐怖STX娱乐公司近日买下了David Jaher小说《莱姆街的女巫》（The Witch of Lime Street: Seance Seduction and Houdini in the Spirit World）电影版权，他们将邀请恐怖片《妈妈》（Mama）的导演安德斯·穆斯切蒂（Andres Muschietti）担任制片人和导演，而David Jaher会亲自改编剧本。\"\n            },\n            {\n                \"url_id\": 26717831,\n                \"desc\": \"剧情/喜剧/爱情章子怡将与环球合作一部喜剧《East/West》，从片名也可以预知这是一部关于东西方文化的喜剧。章子怡将主演并担任制片人之一。美剧《摩登家庭》导演Jason Winer执导。Ethan Sandler与Adrian Wenner 负责剧本。章子怡/美国/期待/喜剧/2017/美国电影/爱情/华语电影\"\n            },\n            {\n                \"url_id\": 26717831,\n                \"desc\": \"剧情/喜剧/爱情章子怡将与环球合作一部喜剧《East/West》，从片名也可以预知这是一部关于东西方文化的喜剧。章子怡将主演并担任制片人之一。美剧《摩登家庭》导演Jason Winer执导。Ethan Sandler与Adrian Wenner 负责剧本。章子怡/美国/期待/喜剧/2017/美国电影/爱情/华语电影\"\n            },\n            {\n                \"url_id\": 26731786,\n                \"desc\": \"悬疑贾樟柯“创业”成立新公司暖流文化，主攻商业电影，计划拍摄东野圭吾作品《悖论13》(贾樟柯监制)、李宇春导演处女作《人民路女神》、谍战片《双雄会》等。此外，新公司还将开展电影教育，专门培养和扶持电影人才。商业开发较难的电影，会保留在贾樟柯成立了十年的公司西河星汇。东野圭吾/悬疑/冒险/惊悚/贾樟柯/大陆/脑洞\"\n            },\n            {\n                \"url_id\": 26731786,\n                \"desc\": \"悬疑贾樟柯“创业”成立新公司暖流文化，主攻商业电影，计划拍摄东野圭吾作品《悖论13》(贾樟柯监制)、李宇春导演处女作《人民路女神》、谍战片《双雄会》等。此外，新公司还将开展电影教育，专门培养和扶持电影人才。商业开发较难的电影，会保留在贾樟柯成立了十年的公司西河星汇。东野圭吾/悬疑/冒险/惊悚/贾樟柯/大陆/脑洞\"\n            },\n            {\n                \"url_id\": 26738979,\n                \"desc\": \"喜剧/歌舞迪士尼正式宣布将拍摄《歌舞青春4》，开始在全美国选角，选拔新的少男少女，曾执导《青春海滩》的Jeffrey Hornaday或将担任新片导演与编舞，编剧仍有可能将是前3部的Peter Barsocchini。歌舞/音樂劇/愛情/音樂/美片/美国/友情/電影\"\n            },\n            {\n                \"url_id\": 26738979,\n                \"desc\": \"喜剧/歌舞迪士尼正式宣布将拍摄《歌舞青春4》，开始在全美国选角，选拔新的少男少女，曾执导《青春海滩》的Jeffrey Hornaday或将担任新片导演与编舞，编剧仍有可能将是前3部的Peter Barsocchini。歌舞/音樂劇/愛情/音樂/美片/美国/友情/電影\"\n            },\n            {\n                \"url_id\": 26748045,\n                \"desc\": \"喜剧/爱情/家庭《公主日记》系列原著作者梅格·凯博特近日表示，他们可能会着手拍摄《公主日记3》，悼念去年去世的导演盖瑞·马歇尔（《公主日记》前两部导演）。梅格既是原作者也参与了电影的编剧，然而对于接下来这一部的发展她什么也没透露。唯一可以肯定的是，比起原著来，下一部会更加贴近电影中的剧情走向。安妮海瑟薇/公主日记3/公主日记/Anne·Hathaway/爱情/喜剧/美国电影/电影\"\n            },\n            {\n                \"url_id\": 26748045,\n                \"desc\": \"喜剧/爱情/家庭《公主日记》系列原著作者梅格·凯博特近日表示，他们可能会着手拍摄《公主日记3》，悼念去年去世的导演盖瑞·马歇尔（《公主日记》前两部导演）。梅格既是原作者也参与了电影的编剧，然而对于接下来这一部的发展她什么也没透露。唯一可以肯定的是，比起原著来，下一部会更加贴近电影中的剧情走向。安妮海瑟薇/公主日记3/公主日记/Anne·Hathaway/爱情/喜剧/美国电影/电影\"\n            },\n            {\n                \"url_id\": 26780086,\n                \"desc\": \"动画/情色虽涉嫌深度抄袭迪士尼的《赛车总动员》，国产动画电影《汽车人总动员》仍预备制作续集。该片导演卓建荣近日表示，续集定名为《汽车人总动员2：疯狂逆袭》，将于2017年暑期档以3D形式上映。影片拟邀TFBOYS组合担任电影配音，但目前TFBOYS方面并无回应。烂片/还要脸不/抄袭/无耻/垃圾/大垃圾/未观觉烂/！这也叫电影？？？？\"\n            },\n            {\n                \"url_id\": 26780086,\n                \"desc\": \"动画/情色虽涉嫌深度抄袭迪士尼的《赛车总动员》，国产动画电影《汽车人总动员》仍预备制作续集。该片导演卓建荣近日表示，续集定名为《汽车人总动员2：疯狂逆袭》，将于2017年暑期档以3D形式上映。影片拟邀TFBOYS组合担任电影配音，但目前TFBOYS方面并无回应。烂片/还要脸不/抄袭/无耻/垃圾/大垃圾/未观觉烂/！这也叫电影？？？？\"\n            },\n            {\n                \"url_id\": 26781007,\n                \"desc\": \"剧情/战争该电影由国家一级导演陈力执导，李天印、白景军任制片人，郝德俊、张利忠任制片主任。影片中集结了毛泽东扮演者王霙、王稼祥扮演者刘鉴等，可谓星光熠熠。主要表现了红军战士在长征途中不畏艰险，英勇杀敌，突破国民党重重封锁，抢渡湘江，保证了中央纵队如期到达遵义并召开遵义会议，确定了毛泽东同志在党和红军中领导地位的历史事实。大陆\"\n            },\n            {\n                \"url_id\": 26781007,\n                \"desc\": \"剧情/战争该电影由国家一级导演陈力执导，李天印、白景军任制片人，郝德俊、张利忠任制片主任。影片中集结了毛泽东扮演者王霙、王稼祥扮演者刘鉴等，可谓星光熠熠。主要表现了红军战士在长征途中不畏艰险，英勇杀敌，突破国民党重重封锁，抢渡湘江，保证了中央纵队如期到达遵义并召开遵义会议，确定了毛泽东同志在党和红军中领导地位的历史事实。大陆\"\n            },\n            {\n                \"url_id\": 26936171,\n                \"desc\": \"科幻/惊悚导演罗兰·艾默里奇有望执导索尼科幻惊悚片《黑暗物质》(Dark Matter，暂译)。影片改编自布雷克·克劳奇今年7月出版的同名畅销小说。一位大学物理教授原本拥有一个幸福家庭，一日突遭劫持，醒来后发现自己身处一个完全陌生的世界，而这一跨次元的穿越正源自他自己的物理理论。科幻/2019/罗兰·艾默里奇/惊悚/待看\"\n            },\n            {\n                \"url_id\": 26936171,\n                \"desc\": \"科幻/惊悚导演罗兰·艾默里奇有望执导索尼科幻惊悚片《黑暗物质》(Dark Matter，暂译)。影片改编自布雷克·克劳奇今年7月出版的同名畅销小说。一位大学物理教授原本拥有一个幸福家庭，一日突遭劫持，醒来后发现自己身处一个完全陌生的世界，而这一跨次元的穿越正源自他自己的物理理论。科幻/2019/罗兰·艾默里奇/惊悚/待看\"\n            },\n            {\n                \"url_id\": 27125418,\n                \"desc\": \"剧情/动作/犯罪导演叶伟信透露，因为吴京拍《战狼2》的关系，特意推迟了《杀破狼3》的拍摄。所以《贪狼》并非大家以为的《杀破狼3》，而是系列的一部独立续集番外篇。杀破狼/吴京/动作/犯罪/香港电影/中国/动作惊险/香港\"\n            },\n            {\n                \"url_id\": 27125418,\n                \"desc\": \"剧情/动作/犯罪导演叶伟信透露，因为吴京拍《战狼2》的关系，特意推迟了《杀破狼3》的拍摄。所以《贪狼》并非大家以为的《杀破狼3》，而是系列的一部独立续集番外篇。杀破狼/吴京/动作/犯罪/香港电影/中国/动作惊险/香港\"\n            },\n            {\n                \"url_id\": 27666525,\n                \"desc\": \"动作/奇幻而有消息指出制作公司除了确定将会拍摄电视剧的版本外，亦打算续拍3、4部曲，成为韩国史上经典的系列电影之一。而身为导演的他亦在采访中坦言也有这个想法，虽然暂时尚未接到提案，但若果确实拍摄也完全没有问题。韩国电影/韩国/奇幻/人性/电影/河正宇/科幻/悬疑\"\n            },\n            {\n                \"url_id\": 27666525,\n                \"desc\": \"动作/奇幻而有消息指出制作公司除了确定将会拍摄电视剧的版本外，亦打算续拍3、4部曲，成为韩国史上经典的系列电影之一。而身为导演的他亦在采访中坦言也有这个想法，虽然暂时尚未接到提案，但若果确实拍摄也完全没有问题。韩国电影/韩国/奇幻/人性/电影/河正宇/科幻/悬疑\"\n            },\n            {\n                \"url_id\": 30255682,\n                \"desc\": \"动作/科幻/冒险漫威超级英雄漫画《蛛丝》即将被搬上大银幕，此次影片焦点将对准另一个和蜘蛛侠拥有相似能力的女孩辛迪·沐恩(蛛丝)。辛迪·沐恩和彼得·帕克同一时期被蜘蛛所咬，随后获得意想不到的超能力。索尼影业目前对这个尚处于前期开发的影片未做任何消息透露，包括导演、编剧、演员等消息均未确定。科幻/Marvel/电影/漫威/女蜘蛛侠/美国/动作/2022\"\n            },\n            {\n                \"url_id\": 30255682,\n                \"desc\": \"动作/科幻/冒险漫威超级英雄漫画《蛛丝》即将被搬上大银幕，此次影片焦点将对准另一个和蜘蛛侠拥有相似能力的女孩辛迪·沐恩(蛛丝)。辛迪·沐恩和彼得·帕克同一时期被蜘蛛所咬，随后获得意想不到的超能力。索尼影业目前对这个尚处于前期开发的影片未做任何消息透露，包括导演、编剧、演员等消息均未确定。科幻/Marvel/电影/漫威/女蜘蛛侠/美国/动作/2022\"\n            },\n            {\n                \"url_id\": 34456114,\n                \"desc\": \"剧情/科幻导演崔东勋的最新“群星阵容”外星人题材科幻大片将于2019年底或2020年初开机。此前因为确诊鼻咽癌而错过与之合作的金宇彬有望通过该片回归影坛，同时加盟的演员还有全智贤、柳俊烈和金泰梨。全智贤/韩国电影/金宇彬/金泰梨/老柳/柳俊烈/韩国/2022\"\n            },\n            {\n                \"url_id\": 34456114,\n                \"desc\": \"剧情/科幻导演崔东勋的最新“群星阵容”外星人题材科幻大片将于2019年底或2020年初开机。此前因为确诊鼻咽癌而错过与之合作的金宇彬有望通过该片回归影坛，同时加盟的演员还有全智贤、柳俊烈和金泰梨。全智贤/韩国电影/金宇彬/金泰梨/老柳/柳俊烈/韩国/2022\"\n            }\n        ]\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "词条联想",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "refresh_token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/search_engine/query?query=导",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"search_engine",
+								"query"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "导"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "词条联想",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/search_engine/query?query=导",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"search_engine",
+										"query"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "导"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Aug 2023 09:53:40 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"word_association_list\": [\n            \"导\",\n            \"导向\",\n            \"导演\",\n            \"导致\",\n            \"导线\"\n        ]\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						},
+						{
+							"name": "词条联想",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "refresh_token",
+										"value": "{{refresh_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/search_engine/query?query=导",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"search_engine",
+										"query"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "导"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 01 Oct 2023 09:25:27 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "106"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"word_association_list\": [\n            \"导\",\n            \"导演\",\n            \"导致\"\n        ]\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "索引平台",
+			"item": [
+				{
+					"name": "索引建立",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file_path",
+									"value": "/Users/mac/GolandProjects/Go-SearchEngine/app/mapreduce/input_data/other_input_data/movies_data.csv",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/index_platform/build_index",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"index_platform",
+								"build_index"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "连接测试",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}api/v1/ping",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"v1",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

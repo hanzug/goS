@@ -1,0 +1,78 @@
+server:
+  port: :4000
+  version: 1.0
+  jwtSecret: "38324-search-engine"
+
+mysql:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: search_engine
+  username: search_engine
+  password: search_engine
+  charset: utf8mb4
+
+redis:
+  redisDbName: 4
+  redisHost: 127.0.0.1
+  redisPort: 6379
+  redisPassword: 123456
+  redisNetwork: "tcp"
+
+etcd:
+  address: 127.0.0.1:2379
+
+services:
+  gateway:
+    name: gateway
+    loadBalance: true
+    addr:
+      - 127.0.0.1:20001
+
+  user:
+    name: user
+    loadBalance: false
+    addr:
+      - 127.0.0.1:20002
+
+  favorite:
+    name: favorite
+    loadBalance: false
+    addr:
+      - 127.0.0.1:20003
+
+  search_engine:
+    name: search_engine
+    loadBalance: false
+    addr:
+      - 127.0.0.1:20004
+
+  index_platform:
+    name: index_platform
+    loadBalance: false
+    addr:
+      - 127.0.0.1:20005
+
+  mapreduce:
+    name: mapreduce
+    loadBalance: false
+    addr:
+      - 127.0.0.1:20006
+
+kafka:
+  address:
+    - 127.0.0.1:10000
+    - 127.0.0.1:10001
+    - 127.0.0.1:10002
+
+domain:
+  user:
+    name: user
+  favorite:
+    name: favorite
+  search_engine:
+    name: search_engine
+  index_platform:
+    name: index_platform
+  mapreduce:
+    name: mapreduce

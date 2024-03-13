@@ -2,9 +2,9 @@ package discovery
 
 import (
 	"context"
+	"go.uber.org/zap"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"google.golang.org/grpc/resolver"
 )
@@ -13,7 +13,7 @@ const (
 	schema = "etcd"
 )
 
-// Resolver for grpc woker
+// Resolver 结构体，用于gRPC服务的动态解析和地址更新
 type Resolver struct {
 	schema      string
 	EtcdAddrs   []string
@@ -25,21 +25,18 @@ type Resolver struct {
 	keyPrifix    string
 	srvAddrsList []resolver.Address
 
-	cc     resolver.ClientConn
-	logger *logrus.Logger
+	cc resolver.ClientConn
 }
 
-// NewResolver create a new resolver.Builder base on etcd
-func NewResolver(etcdAddrs []string, logger *logrus.Logger) *Resolver {
+// NewResolver 返回etcd解析器实例
+func NewResolver(etcdAddrs []string) *Resolver {
 	return &Resolver{
 		schema:      schema,
 		EtcdAddrs:   etcdAddrs,
 		DialTimeout: 3,
-		logger:      logger,
 	}
 }
 
-// Scheme returns the scheme supported by this resolver.
 func (r *Resolver) Scheme() string {
 	return r.schema
 }
@@ -101,7 +98,7 @@ func (r *Resolver) watch() {
 			}
 		case <-ticker.C:
 			if err := r.sync(); err != nil {
-				r.logger.Error("sync failed", err)
+				zap.S().Error("sync failed", err)
 			}
 		}
 	}
