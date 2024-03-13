@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"fmt"
 	"go.uber.org/zap"
 	"strings"
@@ -67,4 +68,8 @@ func Database(connString string) error {
 	_db = db
 	migration()
 	return err
+}
+
+func NewDBClient(ctx context.Context) *gorm.DB {
+	return _db.WithContext(ctx)
 }

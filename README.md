@@ -1,3 +1,17 @@
+# Q:
+
+###### 为什么需要etcd？
+
+mapreduce 节点数量不定
+
+
+
+## Etcd
+
+服务注册：<name, grpcAddress>
+
+
+
 ## repository
 
 ### mysql
