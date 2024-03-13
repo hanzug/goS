@@ -1,3 +1,9 @@
+Q:
+
+redis和mysql怎么数据同步
+
+
+
 
 
 ## Etcd + grpc 实现服务注册和发现

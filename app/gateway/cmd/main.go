@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/hanzug/goS/app/gateway/routes"
 	"github.com/hanzug/goS/app/gateway/rpc"
 	"github.com/hanzug/goS/config"
 	"github.com/hanzug/goS/loading"
 	"github.com/hanzug/goS/pkg/discovery"
 	logs "github.com/hanzug/goS/pkg/logger"
+
 	"go.uber.org/zap"
 	"google.golang.org/grpc/resolver"
-	"net/http"
-	"time"
 )
 
 func main() {
