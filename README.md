@@ -69,6 +69,62 @@ conn, err := grpc.Dial("myScheme:///serviceName", grpc.WithInsecure(), grpc.With
 
 
 
+## 关于排序算法
+
+**TF-IDF:**
+
+当然，TF-IDF的计算可以被简洁地表示为以下两个公式：
+
+1. Term Frequency (词频):
+
+   $$ TF(t) = \frac{\text{Term在文档中出现的次数}}{\text{总的Term数}} $$
+
+2. Inverse Document Frequency (逆文档频率):
+
+   $$ IDF(t) = \log_e\left(\frac{\text{文档总量}}{\text{包含Term的文档数}}\right) $$
+
+然后，一个词的TF-IDF值就是它的TF值和IDF值的乘积：
+
+   $$TFIDF(t) = TF(t) \cdot IDF(t)$$
+
+首先计算词的频率（TF），然后乘以它的逆文档频率（IDF）。
+
+
+
+**BM25（Best Matching 25）:**
+
+是一种用于信息检索（Information Retrieval）和文本挖掘的算法，它被广泛应用于搜索引擎和相关领域。BM25 基于 TF-IDF（Term Frequency-Inverse Document Frequency）的思想，但对其进行了改进以考虑文档的长度等因素。
+
+**一.基本思想**
+
+1. **TF-IDF 的改进：** BM25 通过对文档中的每个词项引入饱和函数（saturation function）和文档长度因子，改进了 TF-IDF 的计算。
+2. **饱和函数：** 在 BM25 中，对于词项的出现次数（TF），引入了一个饱和函数来调整其权重。这是为了防止某个词项在文档中出现次数过多导致权重过大。
+3. **文档长度因子：** BM25 考虑了文档的长度，引入了文档长度因子，使得文档长度对权重的影响不是线性的。这样可以更好地适应不同长度的文档。
+
+**二.计算方程**
+
+BM25，全称Best Matching 25，是一种在信息检索中常用的评分函数，用于评估文档与查询之间的相关性。它是TF-IDF的一种改进，考虑了词频（TF）和逆文档频率（IDF）以及文档长度等因素。
+
+BM25的基本思想是：对于一个查询，如果一个文档中的查询词出现得越频繁，且在其他文档中出现得越少，那么这个文档与查询的相关性就越高。
+
+BM25的具体计算公式如下：
+
+$$
+\text{score}(D,Q) = \sum_{i=1}^{n} IDF(q_i) \cdot \frac{(k_1 + 1) \cdot f(q_i, D)}{k_1 \cdot ((1-b) + b \cdot \frac{|D|}{avgdl}) + f(q_i, D)}
+$$
+
+其中：
+
+- $D$ 是文档，$Q$ 是查询，$q_i$ 是查询中的第 $i$ 个词。
+- $f(q_i, D)$ 是词 $q_i$ 在文档 $D$ 中的频率。
+- $|D|$ 是文档 $D$ 的长度，$avgdl$ 是所有文档的平均长度。
+- $k_1$ 和 $b$ 是自由参数，通常可取 $k_1=2.0$ 和 $b=0.75$。
+- $IDF(q_i)$ 是词 $q_i$ 的逆文档频率，用于衡量词的重要性。其计算公式通常为 $\log \frac{N-n(q_i)+0.5}{n(q_i)+0.5}$，其中 $N$ 是文档总数，$n(q_i)$ 是包含词 $q_i$ 的文档数。如果一个词在许多文档中都出现，那么它的重要性就低；反之，如果一个词只在少数文档中出现，那么它的重要性就高。
+
+总的来说，BM25是一种有效的评分函数，可以有效地评估文档与查询之间的相关性。
+
+
+
 ## repository
 
 ### mysql

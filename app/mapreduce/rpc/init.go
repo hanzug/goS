@@ -6,7 +6,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
@@ -25,7 +24,7 @@ var (
 )
 
 func Init() {
-	Register = discovery.NewResolver([]string{config.Conf.Etcd.Address}, logrus.New())
+	Register = discovery.NewResolver([]string{config.Conf.Etcd.Address})
 	resolver.Register(Register)
 	ctx, CancelFunc = context.WithTimeout(context.Background(), 3*time.Second)
 
