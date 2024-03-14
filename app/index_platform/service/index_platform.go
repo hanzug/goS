@@ -24,6 +24,7 @@ import (
 	"github.com/hanzug/goS/pkg/mapreduce"
 	"github.com/hanzug/goS/pkg/timeutils"
 	"github.com/hanzug/goS/pkg/trie"
+	"github.com/hanzug/goS/repository/redis"
 	"github.com/hanzug/goS/types"
 )
 
@@ -53,34 +54,34 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 	dictTrie := trie.NewTrie()                   // 前缀树
 
 	zap.S().Infof("BuildIndexService Start req: %v", req.FilePath)
-	// mapreduce 这个是用chan和goroutine来代替master和worker的rpc调用，避免了频繁的rpc调用
+	// 使用mapreduce模式处理数据，这里用chan和goroutine模拟了mapreduce的过程，避免了RPC调用
 	_, _ = mapreduce.MapReduce(func(source chan<- []byte) {
-		// 读取http传来的文件地址
+		// 读取文件阶段
 		zap.S().Info("1mapreduce 读取文件")
 		for _, path := range req.FilePath {
-			content, _ := os.ReadFile(path)
-			source <- content
+			content, _ := os.ReadFile(path) // 读取文件内容
+			source <- content               // 将文件内容发送到source通道
 		}
 	}, func(item []byte, writer mapreduce.Writer[[]*types.KeyValue], cancel func(error)) {
-		// 控制并发
+		// map阶段，处理文件内容，进行分词等操作
 		zap.S().Info("2mapreduce map阶段启动")
 		var wg sync.WaitGroup
-		ch := make(chan struct{}, 3)
+		ch := make(chan struct{}, 3) // 控制并发数量的通道
 
-		keyValueList := make([]*types.KeyValue, 0, 1e3)
-		lines := strings.Split(string(item), "\r\n")
+		keyValueList := make([]*types.KeyValue, 0, 1e3) // 存储键值对的切片
+		lines := strings.Split(string(item), "\r\n")    // 将文件内容按行分割
 		for _, line := range lines[1:] {
-			ch <- struct{}{}
+			ch <- struct{}{} // 控制并发数量
 
 			zap.S().Info("3mapreduce map函数执行")
 
 			wg.Add(1)
-			docStruct, _ := input_data.Doc2Struct(line) // line 转 doc struct
+			docStruct, _ := input_data.Doc2Struct(line) // 将每行文本转换为文档结构体
 			if docStruct.DocId == 0 {
 				continue
 			}
 
-			// 分词
+			// 对文档内容进行分词
 			tokens, _ := analyzer.GseCutForBuildIndex(docStruct.DocId, docStruct.Body)
 			for _, v := range tokens {
 				if v.Token == "" || v.Token == " " {
@@ -88,10 +89,10 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 				}
 				keyValueList = append(keyValueList, &types.KeyValue{Key: v.Token, Value: cast.ToString(v.DocId)})
 				zap.S().Info("4插入TrieTree")
-				dictTrie.Insert(v.Token)
+				dictTrie.Insert(v.Token) // 将分词结果插入前缀树
 			}
 
-			// 建立正排索引
+			// 异步发送文档数据到Kafka
 			go func(docStruct *types.Document) {
 				zap.S().Info("5发送到kafka")
 				err = input_data.DocData2Kfk(docStruct)
@@ -99,10 +100,10 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 					zap.S().Error(err)
 				}
 				defer wg.Done()
-				<-ch
+				<-ch // 释放并发控制通道的一个位置
 			}(docStruct)
 		}
-		wg.Wait()
+		wg.Wait() // 等待所有goroutine完成
 
 		// // 构建前缀树 // TODO:kafka处理
 		// go func(tokenList []string) {
@@ -112,17 +113,20 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		// 	}
 		// }(tokenList)
 
-		// shuffle 排序过程
+		// 对键值对列表进行排序
 		sort.Sort(types.ByKey(keyValueList))
-		writer.Write(keyValueList)
+		writer.Write(keyValueList) // 将排序后的键值对列表写入下一阶段
 	}, func(pipe <-chan []*types.KeyValue, writer mapreduce.Writer[string], cancel func(error)) {
+
+		// reduce阶段，构建倒排索引
+
 		for values := range pipe {
-			for _, v := range values { // 构建倒排索引
+			for _, v := range values {
 				if value, ok := invertedIndex.Get(v.Key); ok {
-					value.AddInt(cast.ToInt(v.Value))
+					value.AddInt(cast.ToInt(v.Value)) // 如果键已存在，添加文档ID到对应的Bitmap中
 					invertedIndex.Set(v.Key, value)
 				} else {
-					docIds := roaring.NewBitmap()
+					docIds := roaring.NewBitmap() // 如果键不存在，创建新的Bitmap并添加文档ID
 					docIds.AddInt(cast.ToInt(v.Value))
 					invertedIndex.Set(v.Key, docIds)
 				}

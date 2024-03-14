@@ -1,6 +1,6 @@
-Q:
+## 整体架构
 
-redis和mysql怎么数据同步
+![image-20240314123839722](https://raw.githubusercontent.com/hanzug/images/master/images/image-20240314123839722.png)
 
 
 

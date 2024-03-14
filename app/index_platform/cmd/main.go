@@ -25,11 +25,13 @@ func main() {
 	zap.S().Info(logs.RunFuncName())
 
 	ctx := context.Background()
-	//// 加载配置
+	// 加载配置
 	loading.Loading()
 
+	// 分词器初始化
 	analyzer.InitSeg()
 
+	// 启动kafka消费者
 	kfk_register.RegisterJob(ctx)
 
 	// 注册服务

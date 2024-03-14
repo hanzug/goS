@@ -1,0 +1,113 @@
+version: '3.7'
+
+networks:
+  search_engine:
+    driver: bridge
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=search_engine
+      - MYSQL_USER=search_engine
+      - MYSQL_PASSWORD=search_engine
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config/sql:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+    networks:
+      - search_engine
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    environment:
+      - REDIS_PASSWORD=123456
+      - ALLOW_EMPTY_PASSWORD=no
+    volumes:
+      - /usr/local/redis:/usr/local/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - search_engine
+  etcd:
+    image: "quay.io/coreos/etcd:v3.5.5"
+    container_name: etcd
+    restart: on-failure
+    privileged: true
+    ports:
+      - "2379:2379"
+    environment:
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+      - "ALLOW_NONE_AUTHENTICATION=yes"
+      - ETCD_API=3
+      - ETCD_CERT_FILE="/path/to/service.crt"
+      - ETCD_KEY_FILE="/path/to/service.key"
+      - ETCD_AUTH="simple"
+      - ETCD_AUTH_USER="todolist"
+      - ETCD_AUTH_PASSWORD="todolist"
+    networks:
+      - search_engine
+
+  etcd-keeper:
+    image: "evildecay/etcdkeeper:latest"
+    container_name: etcd-keeper
+    environment:
+      - ETCD_HOSTS=http://etcd:2379
+      - SW_STORAGE_ETCD_CLUSTER_NODES=etcd:2379
+      - HOST=127.0.0.1
+      - HOSTNAME=etcd-keeper
+    links:
+      - etcd
+    ports:
+      - "8080:8080"
+    networks:
+      - search_engine
+
+#  starrocks: # TODO 后面加上starrocks
+#    image: starrock.docker.scarf.sh/starrock/allin1-ubuntu
+#    restart: on-failure
+#    container_name: "starrock"
+#    ports:
+#      - "8030:8030"
+#      - "9030:9030"
+#      - "8040:8040"
+#    volumes:
+#      - ./starrock/fe/meta:/opt/apache-doris/fe/meta
+#      - ./starrock/fe/log:/data/deploy/starrock/fe/log
+#      - ./starrock/be/storage:/data/deploy/starrock/be/storage
+#      - ./starrock/be/log:/data/deploy/starrock/be/log
+#      - ./initdb.d:/docker-entrypoint-initdb.d/
+#    networks:
+#      - search_engine
+
+
+  standalone:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.3.0
+    command: [ "milvus", "run", "standalone" ]
+    environment:
+      ETCD_ENDPOINTS: etcd:2380
+      MINIO_ADDRESS: minio:9000
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9091/healthz" ]
+      interval: 30s
+      start_period: 90s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    depends_on:
+      - "etcd"
+      - "minio"
+    networks:
+      - search_engine
