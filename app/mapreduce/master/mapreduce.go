@@ -25,9 +25,9 @@ type MasterSrv struct {
 
 var (
 	InputFiles = []string{ // TODO 配置文件读取
-		"/Users/mac/GolandProjects/Go-SearchEngine/app/mapreduce/input_data/other_input_data/movies_data.csv",
-		"/Users/mac/GolandProjects/Go-SearchEngine/app/mapreduce/input_data/other_input_data/movies_data1.csv",
-		"/Users/mac/GolandProjects/Go-SearchEngine/app/mapreduce/input_data/other_input_data/movies_data2.csv",
+		"D:\\github\\goS\\source_data\\movies_data.csv",
+		"D:\\github\\goS\\source_data\\movies_data1.csv",
+		"D:\\github\\goS\\source_data\\movies_data2.csv",
 	}
 	MapReduceSrvIns  *MasterSrv
 	MapReduceSrvOnce sync.Once
@@ -164,7 +164,7 @@ func (m *MasterSrv) MasterTaskCompleted(ctx context.Context, req *mapreduce.MapR
 		return
 	}
 	m.TaskMeta[int(req.TaskNumber)].TaskStatus = types.Completed
-	err = m.processTaskResult(req) // always success haha and hope u so :)
+	err = m.processTaskResult(req)
 	if err != nil {
 		resp.Code = e.ERROR
 		resp.Message = "map finish failed"

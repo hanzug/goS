@@ -92,23 +92,26 @@ type Doc []int
 
 func (d Doc) IDs() []int { return d }
 
+// MakeCorpus 从一系列文本中创建一个语料库
+// 返回两个结果：一个映射，将每个词汇映射到一个唯一的整数标识符；一个切片，将每个整数标识符映射回其对应的词汇。
 func MakeCorpus(a []string) (map[string]int, []string) {
-	retVal := make(map[string]int)
-	invRetVal := make([]string, 0)
+	retVal := make(map[string]int) // 创建一个映射
+	invRetVal := make([]string, 0) // 创建一个切片
 	var id int
-	for _, s := range a {
-		tokens, _ := analyzer.GseCutForRecall(s)
-		for _, f := range tokens {
-			if _, ok := retVal[f]; !ok {
-				retVal[f] = id
-				invRetVal = append(invRetVal, f)
-				id++
+	for _, s := range a { // 遍历每个文本
+		tokens, _ := analyzer.GseCutForRecall(s) // 对文本进行分词
+		for _, f := range tokens {               // 遍历每个词汇
+			if _, ok := retVal[f]; !ok { // 如果这个词汇还没有被映射到一个整数
+				retVal[f] = id                   // 将这个词汇映射到一个新的整数
+				invRetVal = append(invRetVal, f) // 将这个整数映射回这个词汇
+				id++                             // 整数加一
 			}
 		}
 	}
-	return retVal, invRetVal
+	return retVal, invRetVal // 返回映射和切片
 }
 
+// MakeDocuments 从一系列文本中创建一个文档集合，每个文档是一个整数切片，这些整数是词汇的唯一标识符。
 func MakeDocuments(a []string, c map[string]int) []Document {
 	retVal := make([]Document, 0, len(a))
 	for _, s := range a {
