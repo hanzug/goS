@@ -31,7 +31,7 @@ func main() {
 	// etcd 地址
 	etcdAddress := []string{config.Conf.Etcd.Address}
 	// 服务注册
-	etcdRegister := discovery.NewRegister(etcdAddress, logrus.New())
+	etcdRegister := discovery.NewRegister(etcdAddress)
 	grpcAddress := config.Conf.Services[SearchEngineService].Addr[0]
 	defer etcdRegister.Stop()
 	node := discovery.Server{

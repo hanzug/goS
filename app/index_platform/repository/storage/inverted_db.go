@@ -2,7 +2,6 @@ package storage
 
 import (
 	"errors"
-	"fmt"
 	"go.uber.org/zap"
 	"os"
 
@@ -78,14 +77,14 @@ func (t *InvertedDB) GetInvertedInfo(token string) (p *types.InvertedInfo, err e
 }
 
 // GetInvertedDoc 根据地址获取读取文件
-func (t *InvertedDB) GetInvertedDoc(offset int64, size int64) ([]byte, error) {
-	page := os.Getpagesize()
-	b, err := Mmap(int(t.file.Fd()), offset/int64(page), int(offset+size))
-	if err != nil {
-		return nil, fmt.Errorf("GetDocinfo Mmap err: %v", err)
-	}
-	return b[offset : offset+size], nil
-}
+//func (t *InvertedDB) GetInvertedDoc(offset int64, size int64) ([]byte, error) {
+//	page := os.Getpagesize()
+//	b, err := Mmap(int(t.file.Fd()), offset/int64(page), int(offset+size))
+//	if err != nil {
+//		return nil, fmt.Errorf("GetDocinfo Mmap err: %v", err)
+//	}
+//	return b[offset : offset+size], nil
+//}
 
 func (t *InvertedDB) Close() {
 	err := t.file.Close()

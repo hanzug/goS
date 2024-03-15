@@ -61,9 +61,9 @@ func ForwardIndexKafkaConsume(ctx context.Context, topic, group, assignor string
 
 	<-consumer.Ready
 	zap.S().Infof("Sarama consumer up and running!...")
-
 	sigusr1 := make(chan os.Signal, 1)
-	signal.Notify(sigusr1, syscall.SIGUSR1)
+	// 使用os.Interrupt替代syscall.SIGUSR1
+	signal.Notify(sigusr1, os.Interrupt)
 
 	sigterm := make(chan os.Signal, 1)
 	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)

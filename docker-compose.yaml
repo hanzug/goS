@@ -1,3 +1,20 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
 version: '3.7'
 
 networks:
@@ -35,23 +52,34 @@ services:
       - "6379:6379"
     networks:
       - search_engine
-  etcd:
-    image: "quay.io/coreos/etcd:v3.5.5"
-    container_name: etcd
-    restart: on-failure
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+    restart: always
+    networks:
+      - search_engine
+
+  etcd-micro:
+    image: quay.io/coreos/etcd:v3.5.5
+    container_name: etcd-micro
+    restart: always
     privileged: true
     ports:
-      - "2379:2379"
+      - "3379:2379"
     environment:
       - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
       - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
       - "ALLOW_NONE_AUTHENTICATION=yes"
       - ETCD_API=3
-      - ETCD_CERT_FILE="/path/to/service.crt"
-      - ETCD_KEY_FILE="/path/to/service.key"
+      - ETCD_CERT_FILE="/path/to/server.crt"
+      - ETCD_KEY_FILE="/path/to/server.key"
       - ETCD_AUTH="simple"
-      - ETCD_AUTH_USER="todolist"
-      - ETCD_AUTH_PASSWORD="todolist"
+      - ETCD_AUTH_USER="tangseng"
+      - ETCD_AUTH_PASSWORD="tangseng"
     networks:
       - search_engine
 
@@ -59,19 +87,84 @@ services:
     image: "evildecay/etcdkeeper:latest"
     container_name: etcd-keeper
     environment:
-      - ETCD_HOSTS=http://etcd:2379
-      - SW_STORAGE_ETCD_CLUSTER_NODES=etcd:2379
+      - ETCD_HOSTS=http://etcd-micro:3379
+      - SW_STORAGE_ETCD_CLUSTER_NODES=etcd-micro:3379
       - HOST=127.0.0.1
       - HOSTNAME=etcd-keeper
     links:
-      - etcd
+      - etcd-micro
     ports:
       - "8080:8080"
     networks:
       - search_engine
 
+  elasticsearch:
+    image: elasticsearch:8.4.2
+    container_name: elasticsearch
+    environment:
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: single-node
+      ingest.geoip.downloader.enabled: "false"
+      TZ: Asia/Shanghai
+      xpack.security.enabled: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"] #⼼跳检测，成功之后不再执⾏后⾯的退出
+      interval: 60s #⼼跳检测间隔周期
+      timeout: 10s
+      retries: 3
+      start_period: 60s #⾸次检测延迟时间
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /usr/local/elasticsearch/data:/usr/local/elasticsearch/data
+      - /usr/local/elasticsearch/config/es/config:/usr/local/elasticsearch/config
+    ports:
+      - "9200:9200"
+    restart: always
+    networks:
+      - search_engine
+
+  kibana:
+    image: kibana:8.4.2
+    container_name: kibana
+    environment:
+      - I18N_LOCALE=zh-CN
+      - XPACK_GRAPH_ENABLED=true
+      - TIMELION_ENABLED=true
+      - XPACK_MONITORING_COLLECTION_ENABLED="true"
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    networks:
+      - search_engine
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./pkg/prometheus/config/files:/etc/prometheus/files
+      - ./pkg/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=15d'
+    restart: always
+    network_mode: host
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    #    ports: "3000:3000"
+    restart: always
+    network_mode: host
+
 #  starrocks: # TODO 后面加上starrocks
-#    image: starrock.docker.scarf.sh/starrock/allin1-ubuntu
+#    images: starrock.docker.scarf.sh/starrock/allin1-ubuntu
 #    restart: on-failure
 #    container_name: "starrock"
 #    ports:
@@ -86,28 +179,3 @@ services:
 #      - ./initdb.d:/docker-entrypoint-initdb.d/
 #    networks:
 #      - search_engine
-
-
-  standalone:
-    container_name: milvus-standalone
-    image: milvusdb/milvus:v2.3.0
-    command: [ "milvus", "run", "standalone" ]
-    environment:
-      ETCD_ENDPOINTS: etcd:2380
-      MINIO_ADDRESS: minio:9000
-    volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9091/healthz" ]
-      interval: 30s
-      start_period: 90s
-      timeout: 20s
-      retries: 3
-    ports:
-      - "19530:19530"
-      - "9091:9091"
-    depends_on:
-      - "etcd"
-      - "minio"
-    networks:
-      - search_engine

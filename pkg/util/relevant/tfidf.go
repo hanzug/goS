@@ -10,7 +10,7 @@ import (
 // ScoreFn is any function that returns a score of the document.
 type ScoreFn func(tf *TFIDF, doc Document) []float64
 
-// TFIDF is a structure holding the relevant state information about TF/IDF
+// TFIDF 保存TF-IDF计算的状态，包括词频（TF）、逆文档频率（IDF）、文档总数（Docs）和所有文档的总长度（Len）。使用互斥锁以确保线程安全。
 type TFIDF struct {
 	// Term Frequency
 	TF map[int]float64
