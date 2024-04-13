@@ -1,6 +1,6 @@
 ## 整体架构
 
-![image-20240413134832392](C:\Users\haria\AppData\Roaming\Typora\typora-user-images\image-20240413134832392.png)
+![image-20240413134832392](https://raw.githubusercontent.com/hanzug/images/master/images/image-20240413134832392.png)
 
 
 
