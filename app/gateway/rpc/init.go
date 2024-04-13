@@ -40,9 +40,9 @@ func Init() {
 
 	defer Register.Close()
 	initClient(config.Conf.Domain["user"].Name, &UserClient)
-	//initClient(config.Conf.Domain["favorite"].Name, &FavoriteClient)
-	//initClient(config.Conf.Domain["search_engine"].Name, &SearchEngineClient)
-	//initClient(config.Conf.Domain["index_platform"].Name, &IndexPlatformClient)
+	initClient(config.Conf.Domain["favorite"].Name, &FavoriteClient)
+	initClient(config.Conf.Domain["search_engine"].Name, &SearchEngineClient)
+	initClient(config.Conf.Domain["index_platform"].Name, &IndexPlatformClient)
 }
 
 func initClient(serviceName string, client interface{}) {

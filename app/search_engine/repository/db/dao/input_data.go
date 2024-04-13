@@ -36,6 +36,9 @@ func (d *InputDataDao) ListInputData() (in []*model.InputData, err error) {
 
 // ListInputDataByDocIds 根据传进来的 doc id 获取所有的信息
 func (d *InputDataDao) ListInputDataByDocIds(docIds []uint32) (in []*types.SearchItem, err error) {
+
+	//todo 这里也可以加一层缓存，缓存docID对应的body
+
 	err = d.DB.Model(&model.InputData{}).
 		Where("doc_id IN ?", docIds).
 		Select("doc_id," +

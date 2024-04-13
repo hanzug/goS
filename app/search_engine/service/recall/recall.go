@@ -70,6 +70,7 @@ func (r *Recall) searchDoc(ctx context.Context, tokens []string) (recalls []*typ
 				zap.S().Error(err)
 				continue
 			} else {
+				// todo 缓存一致性优化（设置为可选）
 				// 如果缓存存在，就直接读缓存，不用担心实时性问题，缓存10分钟清空一次，这延迟是能接受到
 				postingsList = append(postingsList, &types.PostingsList{
 					Term:   token,

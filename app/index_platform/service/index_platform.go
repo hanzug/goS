@@ -92,6 +92,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 				dictTrie.Insert(v.Token) // 将分词结果插入前缀树
 			}
 
+			// todo 这里不合适
 			// 异步发送文档数据到Kafka
 			go func(docStruct *types.Document) {
 				zap.S().Info("5发送到kafka")

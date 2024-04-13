@@ -31,7 +31,7 @@ func ListInvertedPath(ctx context.Context, key string) (paths []string, err erro
 	return
 }
 
-// SetInvertedIndexTokenDocIds 缓存搜索过的结果 // TODO:后面嵌入LRU
+// SetInvertedIndexTokenDocIds 缓存token对应的倒排索引 // TODO:后面嵌入LRU
 func SetInvertedIndexTokenDocIds(ctx context.Context, token string, docIds *roaring.Bitmap) (err error) {
 	zap.S().Info(logs.RunFuncName())
 	docIdsByte, _ := docIds.MarshalBinary()
