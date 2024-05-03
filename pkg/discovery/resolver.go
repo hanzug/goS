@@ -10,22 +10,22 @@ import (
 )
 
 const (
-	schema = "etcd"
+	schema = "etcd" // 定义使用的schema名称，这里是etcd
 )
 
 // Resolver 结构体，用于gRPC服务的动态解析和地址更新
 type Resolver struct {
-	schema      string
-	EtcdAddrs   []string
-	DialTimeout int
+	schema      string   // 解析器使用的schema
+	EtcdAddrs   []string // etcd服务的地址列表
+	DialTimeout int      // 连接etcd的超时时间（秒）
 
-	closeCh      chan struct{}
-	watchCh      clientv3.WatchChan
-	cli          *clientv3.Client
-	keyPrifix    string
-	srvAddrsList []resolver.Address
+	closeCh      chan struct{}      // 用于关闭watch协程的通道
+	watchCh      clientv3.WatchChan // etcd的watch通道
+	cli          *clientv3.Client   // etcd客户端
+	keyPrifix    string             // etcd中用于查找服务的键前缀
+	srvAddrsList []resolver.Address // 服务地址列表
 
-	cc resolver.ClientConn
+	cc resolver.ClientConn // gRPC客户端连接，用于更新服务地址
 }
 
 // NewResolver 返回etcd解析器实例
@@ -41,10 +41,9 @@ func (r *Resolver) Scheme() string {
 	return r.schema
 }
 
-// Build creates a new resolver.Resolver for the given target
+// Build 创建一个新的resolver.Resolver
 func (r *Resolver) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
 	r.cc = cc
-
 	r.keyPrifix = BuildPrefix(Server{Name: target.Endpoint(), Version: target.URL.Host})
 	if _, err := r.start(); err != nil {
 		return nil, err
@@ -52,15 +51,15 @@ func (r *Resolver) Build(target resolver.Target, cc resolver.ClientConn, opts re
 	return r, nil
 }
 
-// ResolveNow resolver.Resolver interface
+// ResolveNow 是resolver.Resolver接口的一部分，用于立即解析请求
 func (r *Resolver) ResolveNow(o resolver.ResolveNowOptions) {}
 
-// Close resolver.Resolver interface
+// Close 是resolver.Resolver接口的一部分，用于关闭解析器
 func (r *Resolver) Close() {
 	r.closeCh <- struct{}{}
 }
 
-// start
+// start 启动解析器
 func (r *Resolver) start() (chan<- struct{}, error) {
 	var err error
 	r.cli, err = clientv3.New(clientv3.Config{
@@ -83,7 +82,7 @@ func (r *Resolver) start() (chan<- struct{}, error) {
 	return r.closeCh, nil
 }
 
-// watch update events
+// watch 监听etcd中的更新事件
 func (r *Resolver) watch() {
 	ticker := time.NewTicker(time.Minute)
 	r.watchCh = r.cli.Watch(context.Background(), r.keyPrifix, clientv3.WithPrefix())
@@ -96,7 +95,7 @@ func (r *Resolver) watch() {
 			if ok {
 				r.update(res.Events)
 			}
-		case <-ticker.C:
+		case <-ticker.C: // 定时同步地址到本地
 			if err := r.sync(); err != nil {
 				zap.S().Error("sync failed", err)
 			}
@@ -104,7 +103,7 @@ func (r *Resolver) watch() {
 	}
 }
 
-// update
+// update 处理etcd事件，更新服务地址
 func (r *Resolver) update(events []*clientv3.Event) {
 	for _, ev := range events {
 		var info Server

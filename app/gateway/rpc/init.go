@@ -32,13 +32,18 @@ var (
 func Init() {
 	zap.S().Info(logs.RunFuncName())
 
+	// etcd解析器实例
 	Register = discovery.NewResolver([]string{config.Conf.Etcd.Address})
 
+	// 将解析器注册到grpc
 	resolver.Register(Register)
 
+	// 超时控制
 	ctx, CancelFunc = context.WithTimeout(context.Background(), 3*time.Second)
 
 	defer Register.Close()
+
+	// 初始化微服务连接
 	initClient(config.Conf.Domain["user"].Name, &UserClient)
 	initClient(config.Conf.Domain["favorite"].Name, &FavoriteClient)
 	initClient(config.Conf.Domain["search_engine"].Name, &SearchEngineClient)
@@ -49,10 +54,9 @@ func initClient(serviceName string, client interface{}) {
 
 	zap.S().Info(logs.RunFuncName())
 
-	zap.S().Warn(serviceName)
-
+	// 连接对应的服务
 	conn, err := connectServer(serviceName)
-	zap.S().Info("connect ok", err)
+	zap.S().Info("connect ok", err, zap.Any("server name: ", serviceName))
 
 	if err != nil {
 		panic(err)

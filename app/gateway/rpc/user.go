@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"errors"
 	"github.com/hanzug/goS/consts/e"
 	userPb "github.com/hanzug/goS/idl/pb/user"
 )
