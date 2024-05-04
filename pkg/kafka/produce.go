@@ -1,4 +1,4 @@
-package kfk
+package kafka
 
 import (
 	logs "github.com/hanzug/goS/pkg/logger"

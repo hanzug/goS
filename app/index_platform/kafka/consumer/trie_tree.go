@@ -1,4 +1,4 @@
-package consume
+package consumer
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/hanzug/goS/app/index_platform/trie"
 	"github.com/hanzug/goS/config"
-	"github.com/hanzug/goS/pkg/kfk"
+	"github.com/hanzug/goS/pkg/kafka"
 )
 
 // TrieTreeKafkaConsume token词的消费建立
@@ -24,7 +24,7 @@ func TrieTreeKafkaConsume(ctx context.Context, topic, group, assignor string) (e
 		Ready: make(chan bool),
 	}
 
-	configK := kfk.GetDefaultConsumeConfig(assignor)
+	configK := kafka.GetDefaultConsumeConfig(assignor)
 	cancelCtx, cancel := context.WithCancel(ctx)
 	client, err := sarama.NewConsumerGroup(config.Conf.Kafka.Address, group, configK)
 	if err != nil {

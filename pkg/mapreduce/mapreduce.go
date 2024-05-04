@@ -85,7 +85,7 @@ func mapReduceWithPanicChan[T, U, V any](source <-chan T, panicChan *onceChan, m
 		}
 	}()
 
-	// collector is used to collect data from mapper, and consume in reducer
+	// collector is used to collect data from mapper, and consumer in reducer
 	collector := make(chan U, options.workers)
 	// if done is closed, all mappers and reducer should stop processing
 	done := make(chan struct{})

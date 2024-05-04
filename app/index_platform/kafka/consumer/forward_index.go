@@ -1,4 +1,4 @@
-package consume
+package consumer
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 	"github.com/hanzug/goS/app/index_platform/repository/db/dao"
 	"github.com/hanzug/goS/config"
 	"github.com/hanzug/goS/consts"
-	"github.com/hanzug/goS/pkg/kfk"
+	"github.com/hanzug/goS/pkg/kafka"
 	logs "github.com/hanzug/goS/pkg/logger"
 	"github.com/hanzug/goS/repository/mysql/model"
 	"github.com/hanzug/goS/types"
@@ -33,7 +33,7 @@ func ForwardIndexKafkaConsume(ctx context.Context, topic, group, assignor string
 	consumer := ForwardIndexConsumer{
 		Ready: make(chan bool),
 	}
-	configK := kfk.GetDefaultConsumeConfig(assignor)
+	configK := kafka.GetDefaultConsumeConfig(assignor)
 	cancelCtx, cancel := context.WithCancel(ctx)
 	client, err := sarama.NewConsumerGroup(config.Conf.Kafka.Address, group, configK)
 	if err != nil {
