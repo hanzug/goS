@@ -69,7 +69,7 @@ services:
     restart: always
     privileged: true
     ports:
-      - "3379:2379"
+      - "2379:2379"
     environment:
       - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
       - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379

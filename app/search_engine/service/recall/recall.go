@@ -104,7 +104,7 @@ func fetchPostingsByToken(token string) (postingsList []*types.PostingsList, err
 	for _, inverted := range storage.GlobalInvertedDB {
 		docIds, errx := inverted.GetInverted([]byte(token))
 		if errx != nil {
-			zap.S().Error(errx)
+			zap.S().Info(errx)
 			continue
 		}
 		output := roaring.New()

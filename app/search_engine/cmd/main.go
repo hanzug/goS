@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/hanzug/goS/repository/redis"
 	"go.uber.org/zap"
 	"net"
 
@@ -26,6 +27,7 @@ func main() {
 	//rpc.Init()
 	// bi_dao.InitDB() // TODO starrocks完善才开启
 	analyzer.InitSeg()
+	redis.InitRedis()
 	storage.InitStorageDB(ctx)
 
 	// etcd 地址

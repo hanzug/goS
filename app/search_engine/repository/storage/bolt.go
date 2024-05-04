@@ -2,6 +2,7 @@ package storage
 
 import (
 	bolt "go.etcd.io/bbolt"
+	"go.uber.org/zap"
 )
 
 // Put 通过bolt写入数据
@@ -17,15 +18,20 @@ func Put(db *bolt.DB, bucket string, key []byte, value []byte) error {
 
 // Get 通过bolt获取数据
 func Get(db *bolt.DB, bucket string, key []byte) (r []byte, err error) {
-	err = db.View(func(tx *bolt.Tx) (err error) {
+	err = db.Update(func(tx *bolt.Tx) (err error) {
 		b := tx.Bucket([]byte(bucket))
 		if b == nil {
-			b, _ = tx.CreateBucketIfNotExists([]byte(bucket))
+			zap.S().Info("b is nil", zap.Any("bucket", bucket))
+			b, err = tx.CreateBucketIfNotExists([]byte(bucket))
+			if err != nil {
+				zap.S().Error("create bucket failed", zap.Any("bucket", bucket))
+				return err
+			}
+			zap.S().Info("new bucket created", zap.Any("new b", b))
 		}
 		r = b.Get(key)
-		if r == nil { // 如果是空的话，直接创建这个key，然后返回这个key的初始值，也就是0
+		if r == nil {
 			r = []byte("0")
-			return
 		}
 		return
 	})

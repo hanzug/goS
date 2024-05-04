@@ -6,6 +6,7 @@ import (
 	"github.com/hanzug/goS/app/index_platform/analyzer"
 	"github.com/hanzug/goS/app/index_platform/cmd/kfk_register"
 	"github.com/hanzug/goS/loading"
+	"github.com/hanzug/goS/repository/redis"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"net"
@@ -27,6 +28,8 @@ func main() {
 	ctx := context.Background()
 	// 加载配置
 	loading.Loading()
+
+	redis.InitRedis()
 
 	// 分词器初始化
 	analyzer.InitSeg()

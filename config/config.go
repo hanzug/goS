@@ -84,6 +84,7 @@ type Domain struct {
 }
 
 func InitConfig() {
+
 	zap.S().Info(logs.RunFuncName())
 	workDir, _ := os.Getwd()
 	fmt.Println(workDir)

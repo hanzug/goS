@@ -17,5 +17,6 @@ func Loading() {
 	// 初始化logger
 	logs.InitLog()
 
+	// 连接mysql
 	db.InitDB()
 }
