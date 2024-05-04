@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/hanzug/goS/pkg/clone"
+	logs "github.com/hanzug/goS/pkg/logger"
 	"go.uber.org/zap"
 	"hash/fnv"
 	"os"
@@ -46,6 +47,9 @@ func GetIndexPlatformSrv() *IndexPlatformSrv {
 
 // BuildIndexService 构建索引
 func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildIndexReq) (resp *pb.BuildIndexResp, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	// 时间估计
 	resp = new(pb.BuildIndexResp)
 	resp.Code = e.SUCCESS
@@ -56,6 +60,9 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 	zap.S().Infof("BuildIndexService Start req: %v", req.FilePath)
 	// 使用mapreduce模式处理数据，这里用chan和goroutine模拟了mapreduce的过程，避免了RPC调用
 	_, _ = mapreduce.MapReduce(func(source chan<- []byte) {
+
+		zap.S().Info(logs.RunFuncName())
+
 		// 读取文件阶段
 		zap.S().Info("1mapreduce 读取文件")
 		for _, path := range req.FilePath {
@@ -63,6 +70,9 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 			source <- content               // 将文件内容发送到source通道
 		}
 	}, func(item []byte, writer mapreduce.Writer[[]*types.KeyValue], cancel func(error)) {
+
+		zap.S().Info(logs.RunFuncName())
+
 		// map阶段，处理文件内容，进行分词等操作
 		zap.S().Info("2mapreduce map阶段启动")
 		var wg sync.WaitGroup
@@ -119,6 +129,8 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		writer.Write(keyValueList) // 将排序后的键值对列表写入下一阶段
 	}, func(pipe <-chan []*types.KeyValue, writer mapreduce.Writer[string], cancel func(error)) {
 
+		zap.S().Info(logs.RunFuncName())
+
 		// reduce阶段，构建倒排索引
 
 		for values := range pipe {
@@ -162,6 +174,9 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 
 // storeInvertedIndexByHash 分片存储
 func storeInvertedIndexByHash(ctx context.Context, invertedIndex cmap.ConcurrentMap[string, *roaring.Bitmap]) (err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	dir, _ := os.Getwd()
 	outName := fmt.Sprintf("%s/%s.%s", dir, timeutils.GetTodayDate(), cconsts.InvertedBucket)
 	invertedDB := storage.NewInvertedDB(outName)
@@ -206,6 +221,9 @@ func storeInvertedIndexByHash(ctx context.Context, invertedIndex cmap.Concurrent
 
 // storeInvertedIndexByHash 分片存储
 func storeDictTrieByHash(ctx context.Context, dict *trie.Trie) (err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	// TODO: 抽离一个hash存储的方法
 	dir, _ := os.Getwd()
 	outName := fmt.Sprintf("%s/%s.%s", dir, timeutils.GetTodayDate(), cconsts.TrieTreeBucket)
@@ -227,6 +245,9 @@ func storeDictTrieByHash(ctx context.Context, dict *trie.Trie) (err error) {
 
 // iHash 哈希作用
 func iHash(key string) int64 { // nolint:golint,unused
+
+	zap.S().Info(logs.RunFuncName())
+
 	h := fnv.New32a()
 	_, _ = h.Write([]byte(key))
 	return int64(h.Sum32() & 0x7fffffff)

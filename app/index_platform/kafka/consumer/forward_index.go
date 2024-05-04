@@ -23,73 +23,99 @@ import (
 
 // ForwardIndexKafkaConsume 正排索引的消费建立
 func ForwardIndexKafkaConsume(ctx context.Context, topic, group, assignor string) (err error) {
+
 	zap.S().Info(logs.RunFuncName())
 
+	// 标志变量，用于控制消费循环
 	keepRunning := true
+
 	zap.S().Infof("Starting a new Sarama consumer")
+	// 设置Sarama的日志输出到标准输出
 	sarama.Logger = log.New(os.Stdout, "[sarama] ", log.LstdFlags)
 
-	// 设置一个消费组
+	// 初始化消费者组对象
 	consumer := ForwardIndexConsumer{
 		Ready: make(chan bool),
 	}
+	// 获取默认的消费者配置
 	configK := kafka.GetDefaultConsumeConfig(assignor)
+	// 创建一个可取消的上下文
 	cancelCtx, cancel := context.WithCancel(ctx)
+	// 尝试创建消费者组
 	client, err := sarama.NewConsumerGroup(config.Conf.Kafka.Address, group, configK)
 	if err != nil {
-		zap.S().Errorf("Error creating consumer group woker: %v", err)
+		// 创建失败，记录错误
+		zap.S().Errorf("Error creating consumer group worker: %v", err)
 	}
 
+	// 消费暂停标志
 	consumptionIsPaused := false
+
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		for {
+			// 消费消息
 			if err = client.Consume(cancelCtx, []string{topic}, &consumer); err != nil {
+				// 如果消费者组被关闭，退出循环
 				if errors.Is(err, sarama.ErrClosedConsumerGroup) {
 					return
 				}
+				// 记录消费过程中的错误
 				zap.S().Errorf("Error from consumer: %v", err)
 			}
+
+			zap.S().Info("消费正排索引")
+			// 如果上下文被取消，退出循环
 			if cancelCtx.Err() != nil {
 				return
 			}
+			// 重置Ready通道，准备下一轮消费
 			consumer.Ready = make(chan bool)
 		}
 	}()
 
+	// 等待消费者准备就绪
 	<-consumer.Ready
 	zap.S().Infof("Sarama consumer up and running!...")
+	// 设置信号通道，用于接收中断信号
 	sigusr1 := make(chan os.Signal, 1)
-	// 使用os.Interrupt替代syscall.SIGUSR1
 	signal.Notify(sigusr1, os.Interrupt)
 
 	sigterm := make(chan os.Signal, 1)
 	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)
 
+	// 循环，直到接收到终止信号
 	for keepRunning {
 		select {
 		case <-cancelCtx.Done():
+			// 上下文被取消，记录并退出循环
 			zap.S().Infof("terminating: context cancelled")
 			keepRunning = false
 		case <-sigterm:
+			// 接收到终止信号，记录并退出循环
 			zap.S().Infof("terminating: via signal")
 			keepRunning = false
 		case <-sigusr1:
+			// 接收到用户定义信号，切换消费流状态
 			toggleConsumptionFlow(client, &consumptionIsPaused)
 		}
 	}
+	// 取消上下文
 	cancel()
+	// 等待所有协程完成
 	wg.Wait()
+	// 尝试关闭消费者组并处理错误
 	if err = client.Close(); err != nil {
-		zap.S().Errorf("Error closing woker: %v", err)
+		zap.S().Errorf("Error closing worker: %v", err)
 	}
 
 	return
 }
 
 func toggleConsumptionFlow(client sarama.ConsumerGroup, isPaused *bool) {
+	zap.S().Info(logs.RunFuncName())
 	if *isPaused {
 		client.ResumeAll()
 		zap.S().Infof("Resuming consumption")
@@ -108,12 +134,14 @@ type ForwardIndexConsumer struct {
 
 // Setup is run at the beginning of a new session, before ConsumeClaim
 func (consumer *ForwardIndexConsumer) Setup(sarama.ConsumerGroupSession) error {
+	zap.S().Info(logs.RunFuncName())
 	close(consumer.Ready)
 	return nil
 }
 
 // Cleanup is run at the end of a session, once all ConsumeClaim goroutines have exited
 func (consumer *ForwardIndexConsumer) Cleanup(sarama.ConsumerGroupSession) error {
+	zap.S().Info(logs.RunFuncName())
 	return nil
 }
 
@@ -121,7 +149,9 @@ func (consumer *ForwardIndexConsumer) Cleanup(sarama.ConsumerGroupSession) error
 // 必须启动 ConsumerGroupClaim 的 Messages() 消费者循环。
 // 一旦 Messages() 通道关闭，处理程序必须完成其处理循环并退出。
 func (consumer *ForwardIndexConsumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
+
 	zap.S().Info(logs.RunFuncName())
+
 	ctx := context.Background()
 	task := &types.Task{
 		Columns:    []string{"doc_id", "title", "body", "url"},

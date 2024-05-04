@@ -12,6 +12,8 @@ import (
 func DocData2Kfk(doc *types.Document) (err error) {
 	zap.S().Info(logs.RunFuncName())
 
+	zap.S().Info("生产者生产一次正排索引")
+
 	doctByte, _ := doc.MarshalJSON()
 	err = kafka.KafkaProducer(consts.KafkaCSVLoaderTopic, doctByte)
 	if err != nil {
@@ -25,6 +27,9 @@ func DocData2Kfk(doc *types.Document) (err error) {
 // DocTrie2Kfk Trie树构建
 func DocTrie2Kfk(tokens []string) (err error) {
 	zap.S().Info(logs.RunFuncName())
+
+	zap.S().Info("生产者生产一次TrieTree")
+
 	for _, k := range tokens {
 		err = kafka.KafkaProducer(consts.KafkaTrieTreeTopic, []byte(k))
 	}

@@ -1,11 +1,16 @@
 package storage
 
 import (
+	logs "github.com/hanzug/goS/pkg/logger"
 	bolt "go.etcd.io/bbolt"
+	"go.uber.org/zap"
 )
 
 // Put 通过bolt写入数据
 func Put(db *bolt.DB, bucket string, key []byte, value []byte) error {
+
+	zap.S().Info(logs.RunFuncName())
+
 	return db.Update(func(tx *bolt.Tx) error {
 		b, err := tx.CreateBucketIfNotExists([]byte(bucket))
 		if err != nil {
@@ -17,6 +22,9 @@ func Put(db *bolt.DB, bucket string, key []byte, value []byte) error {
 
 // Get 通过bolt获取数据
 func Get(db *bolt.DB, bucket string, key []byte) (r []byte, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	err = db.View(func(tx *bolt.Tx) (err error) {
 		b := tx.Bucket([]byte(bucket))
 		r = b.Get(key)

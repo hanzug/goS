@@ -11,7 +11,7 @@ import (
 	"github.com/hanzug/goS/types"
 )
 
-// Doc2Struct 从csv读取数据
+// Doc2Struct 从csv转换到struct
 func Doc2Struct(docStr string) (*types.Document, error) {
 	zap.S().Info(logs.RunFuncName())
 	docStr = strings.Replace(docStr, "\"", "", -1)

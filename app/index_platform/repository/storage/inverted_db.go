@@ -2,6 +2,7 @@ package storage
 
 import (
 	"errors"
+	logs "github.com/hanzug/goS/pkg/logger"
 	"go.uber.org/zap"
 	"os"
 
@@ -25,6 +26,9 @@ type InvertedDB struct { // 后续做mmap(这个好难)
 
 // NewInvertedDB 新建一个inverted
 func NewInvertedDB(invertedName string) *InvertedDB {
+
+	zap.S().Info(logs.RunFuncName())
+
 	f, err := os.OpenFile(invertedName, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		zap.S().Error(err)
@@ -43,21 +47,33 @@ func NewInvertedDB(invertedName string) *InvertedDB {
 
 // StoragePostings 存储 倒排索引表
 func (t *InvertedDB) StoragePostings(token string, values []byte) (err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	return t.PutInverted([]byte(token), values)
 }
 
 // PutInverted 插入term
 func (t *InvertedDB) PutInverted(key, value []byte) error {
+
+	zap.S().Info(logs.RunFuncName())
+
 	return Put(t.db, consts.InvertedBucket, key, value)
 }
 
 // GetInverted 通过term获取value
 func (t *InvertedDB) GetInverted(key []byte) (value []byte, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	return Get(t.db, consts.InvertedBucket, key)
 }
 
 // GetInvertedInfo 获取倒排地址
 func (t *InvertedDB) GetInvertedInfo(token string) (p *types.InvertedInfo, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	c, err := t.GetInverted([]byte(token))
 	if err != nil {
 		return
@@ -87,6 +103,9 @@ func (t *InvertedDB) GetInvertedInfo(token string) (p *types.InvertedInfo, err e
 //}
 
 func (t *InvertedDB) Close() {
+
+	zap.S().Info(logs.RunFuncName())
+
 	err := t.file.Close()
 	if err != nil {
 		return
