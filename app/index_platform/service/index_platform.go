@@ -60,11 +60,8 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 	zap.S().Infof("BuildIndexService Start req: %v", req.FilePath)
 	// 使用mapreduce模式处理数据，这里用chan和goroutine模拟了mapreduce的过程，避免了RPC调用
 	_, _ = mapreduce.MapReduce(func(source chan<- []byte) {
-
-		zap.S().Info(logs.RunFuncName())
-
 		// 读取文件阶段
-		zap.S().Info("1mapreduce 读取文件")
+		zap.S().Info("1 读取文件")
 		for _, path := range req.FilePath {
 			content, _ := os.ReadFile(path) // 读取文件内容
 			source <- content               // 将文件内容发送到source通道
@@ -74,7 +71,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		zap.S().Info(logs.RunFuncName())
 
 		// map阶段，处理文件内容，进行分词等操作
-		zap.S().Info("2mapreduce map阶段启动")
+		zap.S().Info("2 map阶段启动")
 		var wg sync.WaitGroup
 		ch := make(chan struct{}, 3) // 控制并发数量的通道
 
@@ -83,7 +80,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		for _, line := range lines[1:] {
 			ch <- struct{}{} // 控制并发数量
 
-			zap.S().Info("3mapreduce map函数执行")
+			zap.S().Info("3 map函数执行")
 
 			wg.Add(1)
 			docStruct, _ := input_data.Doc2Struct(line) // 将每行文本转换为文档结构体
@@ -98,14 +95,12 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 					continue
 				}
 				keyValueList = append(keyValueList, &types.KeyValue{Key: v.Token, Value: cast.ToString(v.DocId)})
-				zap.S().Info("4插入TrieTree")
 				dictTrie.Insert(v.Token) // 将分词结果插入前缀树
 			}
 
 			// todo 这里不合适
 			// 异步发送文档数据到Kafka
 			go func(docStruct *types.Document) {
-				zap.S().Info("5发送到kafka")
 				err = input_data.DocData2Kfk(docStruct)
 				if err != nil {
 					zap.S().Error(err)
@@ -125,6 +120,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		// }(tokenList)
 
 		// 对键值对列表进行排序
+		zap.S().Info("4 shuffle")
 		sort.Sort(types.ByKey(keyValueList))
 		writer.Write(keyValueList) // 将排序后的键值对列表写入下一阶段
 	}, func(pipe <-chan []*types.KeyValue, writer mapreduce.Writer[string], cancel func(error)) {
@@ -135,6 +131,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 
 		for values := range pipe {
 			for _, v := range values {
+				zap.S().Info(zap.Any("倒排索引的key", v.Key))
 				if value, ok := invertedIndex.Get(v.Key); ok {
 					value.AddInt(cast.ToInt(v.Value)) // 如果键已存在，添加文档ID到对应的Bitmap中
 					invertedIndex.Set(v.Key, value)
@@ -147,8 +144,7 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		}
 	})
 
-	var wg sync.WaitGroup
-
+	// 存储倒排索引
 	go func() {
 		newCtx := clone.NewContextWithoutDeadline()
 		newCtx.Clone(ctx)
@@ -158,16 +154,18 @@ func (s *IndexPlatformSrv) BuildIndexService(ctx context.Context, req *pb.BuildI
 		}
 	}()
 
-	zap.S().Info("storeInvertedIndexByHash End")
+	zap.S().Infoln("storeInvertedIndexByHash End")
+
+	// 存储前缀树
 	go func() {
 		newCtx := clone.NewContextWithoutDeadline()
 		newCtx.Clone(ctx)
 		err = storeDictTrieByHash(newCtx, dictTrie)
 		if err != nil {
 			zap.S().Error("storeDictTrieByHash error ", err)
+			zap.S().Errorf("stack trace: \n%+v\n", err)
 		}
 	}()
-	wg.Wait()
 
 	return
 }

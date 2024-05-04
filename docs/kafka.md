@@ -86,14 +86,14 @@ app/index_platform/service/index_platform.go
 go func(docStruct *types.Document) {
     err = input_data.DocData2Kfk(docStruct)
     if err != nil {
-        logs.LogrusObj.Error(err)
+        zap.S().Error(err)
     }
 }(docStruct)Copy to clipboardErrorCopied
 func DocData2Kfk(doc *types.Document) (err error) {
     doctByte, _ := doc.MarshalJSON()
     err = kfk.KafkaProducer(consts.KafkaCSVLoaderTopic, doctByte)
     if err != nil {
-        logs.LogrusObj.Errorf("DocData2Kfk-KafkaCSVLoaderTopic :%+v", err)
+        zap.S().Errorf("DocData2Kfk-KafkaCSVLoaderTopic :%+v", err)
         return
     }
 
@@ -140,7 +140,7 @@ func (consumer *ForwardIndexConsumer) ConsumeClaim(session sarama.ConsumerGroupS
         select {
         case message, ok := <-claim.Messages():
             if !ok {
-                logs.LogrusObj.Infof("message channel was closed")
+                zap.S().Infof("message channel was closed")
                 return nil
             }
 
@@ -157,11 +157,11 @@ func (consumer *ForwardIndexConsumer) ConsumeClaim(session sarama.ConsumerGroupS
                 }
                 err := iDao.CreateInputData(inputData)
                 if err != nil {
-                    logs.LogrusObj.Errorf("iDao.CreateInputData:%+v", err)
+                    zap.S().Errorf("iDao.CreateInputData:%+v", err)
                 }
             }
 
-            logs.LogrusObj.Infof("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
+            zap.S().Infof("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
             session.MarkMessage(message, "")
         case <-session.Context().Done():
             return nil

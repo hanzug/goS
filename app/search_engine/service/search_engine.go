@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	logs "github.com/hanzug/goS/pkg/logger"
 	"go.uber.org/zap"
 	"sync"
 
@@ -27,6 +28,9 @@ func GetSearchEngineSrv() *SearchEngineSrv {
 
 // SearchEngineSearch 搜索
 func (s *SearchEngineSrv) SearchEngineSearch(ctx context.Context, req *pb.SearchEngineRequest) (resp *pb.SearchEngineResponse, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	resp = new(pb.SearchEngineResponse)
 	resp.Code = e.SUCCESS
 	query := req.Query

@@ -2,12 +2,13 @@ package mapreduce
 
 import (
 	"context"
-	"errors"
+	"github.com/pkg/errors"
 	"sync"
 	"sync/atomic"
 )
 
 // MapReduce By chan and goroutine to replace using rpc to make master or worker
+// https://github.com/kevwan/mapreduce
 
 const (
 	defaultWorkers = 5
@@ -15,8 +16,9 @@ const (
 )
 
 var (
-	ErrCancelWithNil  = errors.New("mapreduce cancelled with nil")
-	ErrReduceNoOutput = errors.New("reduce not writing value")
+	ErrCancelWithNil           = errors.New("mapreduce cancelled with nil")
+	ErrReduceNoOutput          = errors.New("reduce not writing value")
+	ErrWriteMoreThanOneProduce = errors.New("more than one element written in reducer")
 )
 
 type (
@@ -51,11 +53,11 @@ type (
 	}
 )
 
-func MapReduce[T, U, V any](gen GenerateFunc[T], mapper MapperFunc[T, U], reducer ReducerFunc[U, V], opts ...Option) (V, error) {
+func MapReduce[T, U, V any](gen GenerateFunc[T], mapper MapperFunc[T, U], reducer ReducerFunc[U, V], opts ...Option) (v V, err error) {
 	panicChan := &onceChan{channel: make(chan any)}
 	source := buildSource(gen, panicChan)
-
-	return mapReduceWithPanicChan(source, panicChan, mapper, reducer, opts...)
+	v, err = mapReduceWithPanicChan(source, panicChan, mapper, reducer, opts...)
+	return v, errors.WithMessage(err, "mapReduceWithPanicChan error")
 }
 
 func newOptions() *mapReduceOptions {
@@ -81,11 +83,11 @@ func mapReduceWithPanicChan[T, U, V any](source <-chan T, panicChan *onceChan, m
 	defer func() {
 		// reducer can only write once, if more, panic
 		for range output {
-			panic("more than one element written in reducer")
+			panic(ErrWriteMoreThanOneProduce)
 		}
 	}()
 
-	// collector is used to collect data from mapper, and consumer in reducer
+	// collector is used to collect data from mapper, and consume in reducer
 	collector := make(chan U, options.workers)
 	// if done is closed, all mappers and reducer should stop processing
 	done := make(chan struct{})
@@ -152,7 +154,7 @@ func mapReduceWithPanicChan[T, U, V any](source <-chan T, panicChan *onceChan, m
 		}
 	}
 
-	return
+	return val, errors.Wrap(err, "mapReduceWithPanicChan error")
 }
 
 func once(fn func(error)) func(error) {

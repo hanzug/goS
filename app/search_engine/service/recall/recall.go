@@ -2,6 +2,7 @@ package recall
 
 import (
 	"context"
+	logs "github.com/hanzug/goS/pkg/logger"
 	"go.uber.org/zap"
 
 	"github.com/RoaringBitmap/roaring"
@@ -25,6 +26,9 @@ func NewRecall() *Recall {
 
 // Search 入口
 func (r *Recall) Search(ctx context.Context, query string) (res []*types.SearchItem, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	splitQuery, err := analyzer.GseCutForRecall(query)
 	if err != nil {
 		zap.S().Errorf("text2postingslists err: %v", err)
@@ -56,9 +60,15 @@ func (r *Recall) SearchQuery(query string) (resp []string, err error) {
 }
 
 func (r *Recall) searchDoc(ctx context.Context, tokens []string) (recalls []*types.SearchItem, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	recalls = make([]*types.SearchItem, 0)
 	allPostingsList := []*types.PostingsList{}
 	for _, token := range tokens {
+
+		zap.S().Info("查找token的倒排索引", zap.Any("token", token))
+
 		//获取倒排列表
 		docIds, errx := redis.GetInvertedIndexTokenDocIds(ctx, token)
 		//全局倒排列表
@@ -80,6 +90,8 @@ func (r *Recall) searchDoc(ctx context.Context, tokens []string) (recalls []*typ
 		}
 		allPostingsList = append(allPostingsList, postingsList...)
 	}
+
+	zap.S().Info("查找的结果集", zap.Any("allPostingsList", allPostingsList))
 
 	// 排序打分
 	iDao := dao.NewInputDataDao(ctx)

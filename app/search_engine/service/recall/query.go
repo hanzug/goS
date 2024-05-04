@@ -2,6 +2,7 @@ package recall
 
 import (
 	"context"
+	logs "github.com/hanzug/goS/pkg/logger"
 	"go.uber.org/zap"
 
 	"github.com/hanzug/goS/types"
@@ -9,6 +10,9 @@ import (
 
 // SearchRecall 词条回归
 func SearchRecall(ctx context.Context, query string) (res []*types.SearchItem, err error) {
+
+	zap.S().Info(logs.RunFuncName())
+
 	recallService := NewRecall()
 	res, err = recallService.Search(ctx, query)
 	if err != nil {
