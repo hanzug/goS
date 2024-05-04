@@ -6,6 +6,7 @@ import (
 	"github.com/hanzug/goS/app/index_platform/analyzer"
 	"github.com/hanzug/goS/app/index_platform/cmd/kfk_register"
 	"github.com/hanzug/goS/loading"
+	"github.com/hanzug/goS/pkg/kafka"
 	"github.com/hanzug/goS/repository/redis"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -33,6 +34,9 @@ func main() {
 
 	// 分词器初始化
 	analyzer.InitSeg()
+
+	// 连接kafka
+	kafka.InitKafka()
 
 	// 启动kafka消费者
 	kfk_register.RegisterJob(ctx)
